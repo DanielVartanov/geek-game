@@ -111,7 +111,7 @@ class Player
   
   attr_accessor :left_track_power, :right_track_power
   
-  attr_accessor :intersection_point, :advanced_track_axis, :rotated_center, :middle_point, :new_track_axis
+  attr_accessor :intersection_point
   
   def angle
     x_axis = Vector.new(1, 0)
@@ -131,36 +131,37 @@ class Player
   end
 
   def move_tracks(distance)
-    if (left_track_power - right_track_power).abs <= Float::EPSILON * 2
-      #@position = Point.new(@position.x, @position.y + distance * left_track_power).rotate_around(@position, angle)
-    else
-      left_track_delta = Vector.new(0, distance * left_track_power).rotate(angle)
-      right_track_delta = Vector.new(0, distance * right_track_power).rotate(angle)
+    left_track_delta = Vector.new(0, distance * left_track_power).rotate(angle)
+    right_track_delta = Vector.new(0, distance * right_track_power).rotate(angle)
 
-      advanced_left_track = (left_track.to_radius + left_track_delta).to_point
-      advanced_right_track = (right_track.to_radius + right_track_delta).to_point
-      
-      self.advanced_track_axis = Line.new(advanced_left_track, advanced_right_track)
+    advanced_left_track = (left_track.to_radius + left_track_delta).to_point
+    advanced_right_track = (right_track.to_radius + right_track_delta).to_point
+    
+    if (left_track_power - right_track_power).abs <= Float::EPSILON * 2
+      self.left_track = advanced_left_track
+      self.right_track = advanced_right_track
+    else
+      advanced_track_axis = Line.new(advanced_left_track, advanced_right_track)
 
       angle_delta = track_axis.angle_with(advanced_track_axis)
       self.intersection_point = track_axis.intersection_point_with(advanced_track_axis)
 
       self.left_track = left_track.rotate_around(intersection_point, angle_delta)
-      self.right_track = right_track.rotate_around(intersection_point, angle_delta)      
-      puts Segment.new(left_track, right_track).length
+      self.right_track = right_track.rotate_around(intersection_point, angle_delta)
     end
   end
   
   # Drawing      
   
-  def draw_track(center)
-    side_length = 8.to_f
+  def draw_track(center, size)
+    side_length = size.to_f
     corners = [Point.new(center.x - side_length / 2, center.y - side_length / 2),
                Point.new(center.x + side_length / 2, center.y - side_length / 2),
                Point.new(center.x + side_length / 2, center.y + side_length / 2),
                Point.new(center.x - side_length / 2, center.y + side_length / 2)]
     corners.map! { |point| point.rotate_around(center, angle) }
-    @window.rectangle(corners)
+    color = (size > 0) ? @window.default_color : 0xfff00000
+    @window.rectangle(corners, color)
   end
 
   def draw
@@ -169,22 +170,22 @@ class Player
     @window.triangle(Point.new(position.x - 3, position.y).rotate_around(position, angle),
                      Point.new(position.x, position.y + 5.2).rotate_around(position, angle),
                      Point.new(position.x + 3, position.y).rotate_around(position, angle))
-    draw_track(left_track)
-    draw_track(right_track)
+    draw_track(left_track, 8 * left_track_power)
+    draw_track(right_track, 8 * right_track_power)
     
-    @window.line(Line.new(Point.new(-200, 0), Point.new(200, 0)), 0xf0333333)
-    @window.line(Line.new(Point.new(0, -200), Point.new(0, 200)), 0xf0333333)
+    #@window.line(Line.new(Point.new(-200, 0), Point.new(200, 0)), 0xf0333333)
+    #@window.line(Line.new(Point.new(0, -200), Point.new(0, 200)), 0xf0333333)
     
     #@window.line(Line.new(self.intersection_point, self.advanced_track_axis.point1), 0xf00aaff0)
-    @window.square(self.intersection_point, 6, 0xf00aaff0)       
+    #@window.square(self.intersection_point, 6, 0xf00aaff0) unless self.intersection_point.nil?
   end
   
   def initialize(window)
     @left_track = Point.new(-20, 0)
     @right_track = Point.new(20, 0)
     
-    @left_track_power = -0.5
-    @right_track_power = 1
+    @left_track_power = 0
+    @right_track_power = 0
         
     @window = window
   end
@@ -224,7 +225,7 @@ class GameWindow < Gosu::Window
   end
   
   def square(center, side_length, color=default_color)
-    side_length = side_length.to_f
+    side_length = side_length.to_f.abs
     corners = [Point.new(center.x - side_length / 2, center.y - side_length / 2),
                Point.new(center.x + side_length / 2, center.y - side_length / 2),
                Point.new(center.x + side_length / 2, center.y + side_length / 2),
@@ -233,17 +234,27 @@ class GameWindow < Gosu::Window
   end
 
   def update
-    if button_down? Gosu::KbLeft
-    #  @player.turn_counter_clock_wise(3 * Math::PI / 180) # 5.radians
+    step = 0.02
+    if button_down? Gosu::KbPageUp
+      @player.right_track_power += step unless @player.right_track_power >= 1
     end
 
-    if button_down? Gosu::KbRight
-     # @player.turn_clock_wise(3 * Math::PI / 180)
+    if button_down? Gosu::KbPageDown      
+      @player.right_track_power -= step unless @player.right_track_power <= -1
     end
 
     if button_down? Gosu::KbUp
-      @player.move_tracks(1)
-    end       
+      @player.left_track_power += step unless @player.left_track_power >= 1
+    end
+    
+    if button_down? Gosu::KbDown
+      @player.left_track_power -= step unless @player.left_track_power <= -1
+    end
+    
+    @player.left_track_power = 0 if button_down?(Gosu::KbLeft) or button_down?(Gosu::KbRight)
+    @player.right_track_power = 0 if button_down?(Gosu:: KbHome) or button_down?(Gosu::KbEnd)
+    
+    @player.move_tracks(1)
   end
 
   def draw
@@ -251,7 +262,7 @@ class GameWindow < Gosu::Window
 
     @lines[0].draw("position: (#{@player.position.x.to_i}, #{@player.position.y.to_i}) angle: #{(@player.angle * 180 / Math::PI).to_i} ", 10, 10, 3, 1.0, 1.0, default_color)
     @lines[1].draw("track power: [#{@player.left_track_power}, #{@player.right_track_power}]", 10, 30, 3, 1.0, 1.0, default_color)
-    @lines[2].draw("left track: (#{@player.left_track.x.to_i}, #{@player.left_track.y.to_i}), right track: (#{@player.right_track.x.to_i}, #{@player.right_track.y.to_i})", 10, 50, 3, 1.0, 1.0, default_color)
+    #@lines[2].draw("left track: (#{@player.left_track.x.to_i}, #{@player.left_track.y.to_i}), right track: (#{@player.right_track.x.to_i}, #{@player.right_track.y.to_i})", 10, 50, 3, 1.0, 1.0, default_color)
   end
 
   def button_down(id)
