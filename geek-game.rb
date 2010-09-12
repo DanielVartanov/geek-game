@@ -40,6 +40,10 @@ class Vector < Struct.new(:x, :y)
     x * vector.x + y * vector.y
   end
   
+  def cross_product(vector)
+    x * vector.y - y * vector.x
+  end
+  
   def rotate(angle)
     self.to_point.rotate_around(Point.new(0, 0), angle).to_radius
   end
@@ -47,10 +51,13 @@ class Vector < Struct.new(:x, :y)
   def +(vector)
     Vector.new(x + vector.x, y + vector.y)
   end
-  
+
+  # Write tests, бля!
   def angle_with(vector)
     cos_alpha = self.scalar_product(vector) / (self.modulus * vector.modulus)
-    Math.acos(cos_alpha)
+    alpha = Math.acos(cos_alpha)
+    alpha = 2 * Math::PI - alpha if cross_product(vector) < 0
+    alpha
   end
   
   def to_point
@@ -87,29 +94,33 @@ end
 class Segment < Struct.new(:point1, :point2)
   def middle_point
     Point.new(
-      (point2.x - point1.x).to_f / 2,
-      (point2.y - point1.y).to_f / 2
+      point1.x + (point2.x - point1.x).to_f / 2,
+      point1.y + (point2.y - point1.y).to_f / 2
     )
+  end
+  
+  def length
+    self.point1.distance_to(self.point2)
   end
 end
 
 class Player
-  attr_reader :position, :angle
-  
-  def angle=(value)
-    @angle = value % (2 * Math::PI)
-  end
-  
-  def position=(point)
-    @position.x = point.x# % 640
-    @position.y = point.y# % 480
-  end
+  attr_accessor :left_track, :right_track  
   
   # Tracks model
   
   attr_accessor :left_track_power, :right_track_power
   
   attr_accessor :intersection_point, :advanced_track_axis, :rotated_center, :middle_point, :new_track_axis
+  
+  def angle
+    x_axis = Vector.new(1, 0)
+    x_axis.angle_with(Vector.by_end_points(left_track, right_track))
+  end
+  
+  def position
+    Segment.new(left_track, right_track).middle_point
+  end
   
   def axis_lenghth
     40
@@ -121,10 +132,10 @@ class Player
 
   def move_tracks(distance)
     if (left_track_power - right_track_power).abs <= Float::EPSILON * 2
-      @position = Point.new(@position.x, @position.y + distance * left_track_power).rotate_around(@position, @angle)
+      #@position = Point.new(@position.x, @position.y + distance * left_track_power).rotate_around(@position, angle)
     else
-      left_track_delta = Vector.new(0, distance * left_track_power).rotate(@angle)
-      right_track_delta = Vector.new(0, distance * right_track_power).rotate(@angle)
+      left_track_delta = Vector.new(0, distance * left_track_power).rotate(angle)
+      right_track_delta = Vector.new(0, distance * right_track_power).rotate(angle)
 
       advanced_left_track = (left_track.to_radius + left_track_delta).to_point
       advanced_right_track = (right_track.to_radius + right_track_delta).to_point
@@ -134,41 +145,13 @@ class Player
       angle_delta = track_axis.angle_with(advanced_track_axis)
       self.intersection_point = track_axis.intersection_point_with(advanced_track_axis)
 
-      next_left_track_position = left_track.rotate_around(intersection_point, angle_delta)
-      next_right_track_position = right_track.rotate_around(intersection_point, angle_delta)
-
-      self.rotated_center = position.rotate_around(intersection_point, angle_delta)
-      self.middle_point = Segment.new(next_left_track_position, next_right_track_position).middle_point
-
-      puts rotated_center.distance_to(middle_point)
-
-      self.position = middle_point
-      self.angle += angle_delta
-      
-      x_axis = Vector.new(1, 0)
-      self.new_track_axis = Line.new(next_left_track_position, next_right_track_position)
-
-      puts (self.angle - x_axis.angle_with(new_track_axis.to_vector))
+      self.left_track = left_track.rotate_around(intersection_point, angle_delta)
+      self.right_track = right_track.rotate_around(intersection_point, angle_delta)      
+      puts Segment.new(left_track, right_track).length
     end
   end
   
-  # Drawing
-  
-  def unangled_left_track
-    Point.new(@position.x - axis_lenghth / 2, @position.y)
-  end
-  
-  def unangled_right_track
-    Point.new(@position.x + axis_lenghth / 2, @position.y)
-  end
-  
-  def left_track
-    unangled_left_track.rotate_around(@position, @angle)
-  end
-
-  def right_track
-    unangled_right_track.rotate_around(@position, @angle)
-  end
+  # Drawing      
   
   def draw_track(center)
     side_length = 8.to_f
@@ -176,42 +159,31 @@ class Player
                Point.new(center.x + side_length / 2, center.y - side_length / 2),
                Point.new(center.x + side_length / 2, center.y + side_length / 2),
                Point.new(center.x - side_length / 2, center.y + side_length / 2)]
-    corners.map! { |point| point.rotate_around(@position, @angle) }
+    corners.map! { |point| point.rotate_around(center, angle) }
     @window.rectangle(corners)
   end
 
   def draw
     @window.line(track_axis)
     
-    @window.triangle(Point.new(@position.x - 3, @position.y).rotate_around(@position, @angle),
-                     Point.new(@position.x, @position.y + 5.2).rotate_around(@position, @angle),
-                     Point.new(@position.x + 3, @position.y).rotate_around(@position, @angle))
-    #draw_track(unangled_left_track)
-    #draw_track(Point.new(@position.x + axis_lenghth / 2, @position.y))
+    @window.triangle(Point.new(position.x - 3, position.y).rotate_around(position, angle),
+                     Point.new(position.x, position.y + 5.2).rotate_around(position, angle),
+                     Point.new(position.x + 3, position.y).rotate_around(position, angle))
+    draw_track(left_track)
+    draw_track(right_track)
     
     @window.line(Line.new(Point.new(-200, 0), Point.new(200, 0)), 0xf0333333)
     @window.line(Line.new(Point.new(0, -200), Point.new(0, 200)), 0xf0333333)
     
-    @window.line(Line.new(self.intersection_point, self.advanced_track_axis.point1), 0xf00aaff0)
-    @window.square(self.intersection_point, 6, 0xf00aaff0)
-    
-    @window.square(self.middle_point, 4, 0xf00ff000)
-    @window.square(self.rotated_center, 4, 0xf0ff0000)
-    #@window.line(self.new_track_axis, 0xf0ff0000)
-  end
-
-  def turn_clock_wise(delta)
-    self.angle -= delta
-  end
-
-  def turn_counter_clock_wise(delta)
-    self.angle += delta
+    #@window.line(Line.new(self.intersection_point, self.advanced_track_axis.point1), 0xf00aaff0)
+    @window.square(self.intersection_point, 6, 0xf00aaff0)       
   end
   
   def initialize(window)
-    @position = Point.new(0, 0)
-    @angle = 0
-    @left_track_power = 0.7
+    @left_track = Point.new(-20, 0)
+    @right_track = Point.new(20, 0)
+    
+    @left_track_power = -0.5
     @right_track_power = 1
         
     @window = window
