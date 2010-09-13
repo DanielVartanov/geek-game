@@ -22,10 +22,10 @@ describe Point do
     end
   end
   
-  describe ".[]" do
+  describe "Point()" do
     context "when passed with two numbers" do
       it "should create an instance" do
-        Point[1, 3].should == Point.new(1, 3)
+        Point(1, 3).should == Point.new(1, 3)
       end
     end
   end
@@ -45,10 +45,19 @@ describe Point do
     end
   end
 
+  describe "#to_radius" do
+    it "should convert point into radius-vector" do
+      @radius_vector = Point(2, 3).to_radius
+      @radius_vector.should be_a(Vector)
+      @radius_vector.x.should == 2
+      @radius_vector.y.should == 3
+    end
+  end
+
   describe "#rotate_around" do
     it "should rotate correctly" do
       Point[1, 1].rotate_around(Point[0, 0], 90.degrees).should == Point[-1, 1]
-      Point[1, 1].rotate_around(Point[0, 0], 270.degrees).should == Point[-1, -1]
+      Point[1, 1].rotate_around(Point[0, 0], 270.degrees).should == Point[1, -1]
       Point[2, 2].rotate_around(Point[1, 1], 180.degrees).should == Point[0, 0]
     end
   end
