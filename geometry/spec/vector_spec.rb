@@ -28,14 +28,14 @@ describe Vector do
       end
     end
 
-    context "when angle is greater than Pi" do
+    context "when CCW-angle is greater than Pi" do
       before :each do
-        @vector = Vector(1, 0)
-        @another_vector = Vector(-1, -1)
+        @vector = Vector(1, 1)
+        @another_vector = Vector(1, -1)
       end
 
-      it "should return angle" do
-        @vector.angle_with(@another_vector).should === 225.degrees
+      it "should return negative angle" do
+        @vector.angle_with(@another_vector).should === -90.degrees
       end
     end
   end
