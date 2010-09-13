@@ -1,8 +1,9 @@
+# -*- coding: utf-8 -*-
 require 'rubygems'
 require 'gosu'
 
 # TODO: Point[0, 0]
-
+ 
 class Point < Struct.new(:x, :y)
   def rotate_around(center, angle)
     diff = Point.new(self.x - center.x, self.y - center.y)
