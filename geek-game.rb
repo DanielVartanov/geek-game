@@ -30,6 +30,8 @@ class GeekGame
 
     @clock = Rubygame::Clock.new
     @clock.target_framerate = 30
+    @clock.calibrate
+    @clock.enable_tick_events
 
     class << @screen
       include Shapes
@@ -53,10 +55,10 @@ class GeekGame
   
   def run
     loop do
-      update
-      @bot.move_tracks(1)
-      draw      
-      @clock.tick
+      milliseconds = @clock.tick.milliseconds
+      @bot.update(milliseconds)
+      update      
+      draw            
     end
   end
 
