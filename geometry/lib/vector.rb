@@ -30,11 +30,13 @@ class Vector < Struct.new(:x, :y)
 
   def angle_with(vector)
     cos_alpha = self.scalar_product(vector) / (self.modulus * vector.modulus)
-    alpha = Math.acos(cos_alpha)
-    alpha = -alpha if cross_product(vector) < 0
-    alpha
+    Math.acos(cos_alpha)
   end
-  
+
+  def signed_angle_with(vector)
+    angle_with(vector) * cross_product(vector).sign
+  end
+
   def to_point
     Point.new(self.x, self.y)
   end

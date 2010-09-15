@@ -16,6 +16,30 @@ describe Vector do
     end
   end
 
+  describe "#signed_angle_with" do
+    context "when angle is less than Pi" do
+      before :each do
+        @vector = Vector(1, 0)
+        @another_vector = Vector(0, 1)
+      end
+
+      it "should return angle" do
+        @vector.signed_angle_with(@another_vector).should === 90.degrees
+      end
+    end
+
+    context "when CCW-angle is greater than Pi" do
+      before :each do
+        @vector = Vector(1, 1)
+        @another_vector = Vector(1, -1)
+      end
+
+      it "should return negative angle" do
+        @vector.signed_angle_with(@another_vector).should === -90.degrees
+      end
+    end
+  end
+
   describe "#angle_with" do
     context "when angle is less than Pi" do
       before :each do
@@ -34,8 +58,8 @@ describe Vector do
         @another_vector = Vector(1, -1)
       end
 
-      it "should return negative angle" do
-        @vector.angle_with(@another_vector).should === -90.degrees
+      it "should still return smallest positive angle" do
+        @vector.angle_with(@another_vector).should === 90.degrees
       end
     end
   end
