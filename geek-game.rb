@@ -8,6 +8,9 @@ require 'shapes'
 require 'hud'
 require 'tracked_bot'
 
+require 'graphics/base'
+require 'graphics/tracked_bot'
+
 require 'geometry/init'
 
 class Point
@@ -29,7 +32,7 @@ class GeekGame
     @queue.enable_new_style_events
 
     @clock = Rubygame::Clock.new
-    @clock.target_framerate = 30
+    @clock.target_framerate = 50
     @clock.calibrate
     @clock.enable_tick_events
 

@@ -50,30 +50,6 @@ class TrackedBot
     end
   end
   
-  # Drawing      
-
-  def draw_track(surface, center, size)
-    side_length = size.to_f
-    corners = [Point(center.x - side_length / 2, center.y - side_length / 2),
-               Point(center.x + side_length / 2, center.y - side_length / 2),
-               Point(center.x + side_length / 2, center.y + side_length / 2),
-               Point(center.x - side_length / 2, center.y + side_length / 2)]
-    corners.map! { |point| point.rotate_around(center, angle) }
-    color = (size > 0) ? surface.default_color : [0xff, 0x00, 0x00]
-    surface.rectangle(corners, color)
-  end
-
-  def draw(surface)
-    surface.line(track_axis)
-    
-    surface.triangle(Point(position.x - 3, position.y).rotate_around(position, angle),
-                     Point(position.x, position.y + 5.2).rotate_around(position, angle),
-                     Point(position.x + 3, position.y).rotate_around(position, angle))
-
-    draw_track(surface, left_track, 8 * left_track_power)
-    draw_track(surface, right_track, 8 * right_track_power)
-  end
-  
   def initialize
     @left_track = Point(-20, 0)
     @right_track = Point(20, 0)
@@ -81,7 +57,7 @@ class TrackedBot
     @left_track_power = 0
     @right_track_power = 0
 
-    @target_left_track_power = 0.7
+    @target_left_track_power = -1.0
     @target_right_track_power = 1.0
   end
 
@@ -108,5 +84,9 @@ class TrackedBot
     end
 
     move_tracks(seconds)
+  end
+
+  def draw(surface)
+    Graphics::TrackedBot.new(self, surface).draw
   end  
 end

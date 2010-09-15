@@ -13,7 +13,7 @@ class Line < Struct.new(:point1, :point2)
     x = point1.x + t * (point2.x - point1.x)
     y = point1.y + t * (point2.y - point1.y)            
 
-    Point[x, y]
+    Point(x, y)
   end
   
   def angle_with(line)
