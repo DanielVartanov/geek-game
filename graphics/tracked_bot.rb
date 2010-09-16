@@ -6,8 +6,8 @@ module Graphics
 
     extend Forwardable
 
-    def_delegators :tracked_bot, :position, :angle, :left_track_power, :right_track_power, :track_axis,
-                   :left_track, :right_track
+    def_delegators :tracked_bot, :position, :angle, :track_axis, :left_track, :right_track,
+                   :left_track_position, :right_track_position
 
     def draw_track(center, size)
       side_length = size.to_f
@@ -27,8 +27,8 @@ module Graphics
                        Point(position.x, position.y + 5.2).rotate_around(position, angle),
                        Point(position.x + 3, position.y).rotate_around(position, angle))
 
-      draw_track( left_track, 8 * left_track_power)
-      draw_track(right_track, 8 * right_track_power)
+      draw_track(left_track_position, 8 * left_track.power)
+      draw_track(right_track_position, 8 * right_track.power)
     end
   end
 end

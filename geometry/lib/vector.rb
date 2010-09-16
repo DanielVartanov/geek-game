@@ -28,6 +28,10 @@ class Vector < Struct.new(:x, :y)
     Vector.new(x + vector.x, y + vector.y)
   end
 
+  def *(scalar)      
+    Vector.new(x * scalar, y * scalar)
+  end
+
   def angle_with(vector)
     cos_alpha = self.scalar_product(vector) / (self.modulus * vector.modulus)
     Math.acos(cos_alpha)
@@ -39,6 +43,10 @@ class Vector < Struct.new(:x, :y)
 
   def to_point
     Point.new(self.x, self.y)
+  end
+
+  def to_s
+    "Vector(#{x}, #{y})"
   end
 end
 

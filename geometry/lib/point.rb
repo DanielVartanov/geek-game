@@ -13,9 +13,17 @@ class Point < Struct.new(:x, :y)
               center.y + diff.x * Math.sin(angle) + diff.y * Math.cos(angle))
   end
 
+  def advance_by(vector)
+    (to_radius + vector).to_point
+  end
+
   def to_radius
     Vector(self.x, self.y)
-  end  
+  end
+
+  def to_s
+    "Point(#{x}, #{y})"
+  end
 end
 
 def Point(x, y)

@@ -23,6 +23,10 @@ class Line < Struct.new(:point1, :point2)
   def to_vector
     Vector.by_end_points(self.point1, self.point2)
   end
+
+  def to_s
+    "Line(#{point1}, #{point2})"
+  end
 end
 
 def Line(point1, point2)

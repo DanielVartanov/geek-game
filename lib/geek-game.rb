@@ -38,6 +38,8 @@ class GeekGame
     # Bot
 
     @bot = TrackedBot.new
+    @bot.left_track.target_power = 0.7
+    @bot.right_track.target_power = 1
   end
   
   def run
@@ -61,10 +63,10 @@ class GeekGame
   
   def draw
     @screen.fill(:black)
-    
+
     @bot.draw(@screen)
 
-    text = "position: (#{@bot.position.x.to_i}, #{@bot.position.y.to_i}) angle: #{(@bot.angle * 180 / Math::PI).to_i} track power: [#{@bot.left_track_power}, #{@bot.right_track_power}]"
+    text = "position: (#{@bot.position.x.to_i}, #{@bot.position.y.to_i}) angle: #{(@bot.angle * 180 / Math::PI).to_i} track power: [#{@bot.left_track.power}, #{@bot.right_track.power}]"
 
     @screen.draw_text_info(@font, text)
 
