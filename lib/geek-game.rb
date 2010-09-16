@@ -1,27 +1,11 @@
-#!/usr/bin/env ruby
-# -*- coding: utf-8 -*-
-
-require 'rubygems'
-require "rubygame"
-
-require 'shapes'
-require 'hud'
-require 'tracked_bot'
-
-require 'graphics/base'
-require 'graphics/tracked_bot'
-
-require 'geometry/init'
-
-class Point
+module PointExtensions
   def to_screen(screen)
     center = screen.size.map { |axis| axis / 2 }
     [center[0] + x, center[1] - y]
   end
 end
 
-maximum_resolution = Rubygame::Screen.get_resolution
-puts "This display can manage at least " + maximum_resolution.join("x")
+Point.class_eval { include PointExtensions }
 
 class GeekGame
   def initialize
@@ -58,8 +42,8 @@ class GeekGame
   
   def run
     loop do
-      milliseconds = @clock.tick.milliseconds
-      @bot.update(milliseconds)
+      seconds = @clock.tick.seconds
+      @bot.update(seconds)
       update      
       draw            
     end
@@ -87,5 +71,3 @@ class GeekGame
     @screen.flip
   end  
 end
-
-GeekGame.new.run
