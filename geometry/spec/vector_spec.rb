@@ -96,4 +96,28 @@ describe Vector do
       end
     end
   end
+
+  describe "#signed_angle" do
+    context "when endpoint is upper than X-axis" do
+      it "should return positive angle" do
+        Vector(1, 1).signed_angle.should === 45.degrees
+        Vector(0, 1).signed_angle.should === 90.degrees
+        Vector(-1, 1).signed_angle.should === 135.degrees
+      end
+    end
+
+    context "when endpoint is on X-axis" do
+      context "when endpoint is on the right from origin" do
+        it "should return zero" do
+          Vector(1, 0).signed_angle.should === 0
+        end
+      end
+
+      context "whem endpoint is on the left from origin" do
+        it "should return Pi" do
+          Vector(-1, 0).signed_angle.should == 180.degrees
+        end
+      end
+    end
+  end
 end

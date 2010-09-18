@@ -7,6 +7,10 @@ class Vector < Struct.new(:x, :y)
     Math.hypot(x ,y)
   end
 
+  def signed_angle
+    Vector(1, 0).signed_angle_with(self)
+  end
+
   def scalar_product(vector)
     x * vector.x + y * vector.y
   end
