@@ -38,6 +38,28 @@ describe Vector do
         @vector.signed_angle_with(@another_vector).should === -90.degrees
       end
     end
+
+    context "when angle is equal to Pi" do
+      before do
+        @vector = Vector(1, 0)
+        @another_vector = Vector(-1, 0)        
+      end
+
+      it "should return Pi" do
+        @vector.signed_angle_with(@another_vector).should === 180.degrees
+      end
+    end
+
+    context "when angle is zero" do
+      before do
+        @vector = Vector(1, 0)
+        @another_vector = Vector(1, 0)
+      end
+
+      it "should return zero" do
+        @vector.signed_angle_with(@another_vector).should === 0.degrees
+      end
+    end
   end
 
   describe "#angle_with" do
@@ -60,6 +82,17 @@ describe Vector do
 
       it "should still return smallest positive angle" do
         @vector.angle_with(@another_vector).should === 90.degrees
+      end
+    end
+
+    context "when angle is Pi" do
+      before do
+        @vector = Vector(1, 0)
+        @another_vector = Vector(-1, 0)
+      end
+
+      it "should return Pi" do
+        @vector.angle_with(@another_vector).should === 180.degrees
       end
     end
   end
