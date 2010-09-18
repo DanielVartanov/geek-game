@@ -2,7 +2,11 @@ require 'spec_helper'
 
 describe Track do
   before :each do
-    @track = Track.new(TrackedBot.new)
+    @bot = TrackedBot.new
+    @track = Track.new
+  end
+
+  it "should set power to 0 at initialize" do
     @track.power.should === 0
   end
 
@@ -50,6 +54,33 @@ describe Track do
 
       it "should advance power to target one" do
         @track.power.should == 0.5 * Track::TRACK_POWER_ACCELERATION
+      end
+    end
+  end
+
+  describe "#aim" do
+    
+  end
+
+  describe "#gun_angle" do
+    before do
+      @expected_gun_angle = @bot.angle + @bot.gun.angle
+    end
+    
+    it "should return gun angle absolute value" do
+      @bot.gun_angle.should === @expected_gun_angle
+    end
+
+    describe "when bot angle is -45 degrees" do
+      describe "when gun angle is 135 degrees" do
+        before do
+          @bot = TrackedBot.new :angle => -45.degrees, :gun_relative_angle => 135.degrees
+          @expected_gun_angle = 90.degrees
+        end
+
+        it "should return gun angle absolute value" do
+          @bot.gun_angle.should === @expected_gun_angle
+        end
       end
     end
   end
