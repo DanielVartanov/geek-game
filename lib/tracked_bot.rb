@@ -5,17 +5,24 @@ class TrackedBot
 
   attr_reader :position, :angle
   attr_reader :left_track, :right_track
+  attr_reader :gun
 
   def track_axis
     Line(left_track_position, right_track_position)
   end
 
-  def initialize(initial_params)
-    self.left_track = Track.new(self)
-    self.right_track = Track.new(self)
+  def initialize(initial_params = {})
+    self.left_track = Track.new
+    self.right_track = Track.new
 
     self.position = initial_params[:position] || Point(0, 0)
     self.angle = initial_params[:angle] || 0
+
+    self.gun = Gun.new initial_params[:gun_relative_angle] || 90.degrees
+  end
+
+  def gun_angle
+    self.angle + self.gun.angle
   end
 
   def motor!(target_left_track_power, target_right_track_power)
@@ -51,9 +58,10 @@ class TrackedBot
     time_step = 1e-3
 
     (seconds.to_f / time_step).to_i.times do
-      left_track.update_power(seconds)
-      right_track.update_power(seconds)
+      left_track.update_power(time_step)
+      right_track.update_power(time_step)
       advance_tracks(time_step)
+      gun.update_angle(time_step)
     end
   end
 
@@ -65,6 +73,7 @@ class TrackedBot
 
   attr_writer :position, :angle
   attr_writer :left_track, :right_track
+  attr_writer :gun
 
   def left_track_position
     right_track_position.rotate_around(position, 180.degrees)
@@ -76,16 +85,15 @@ class TrackedBot
   end  
 end
 
-class Track < Struct.new(:tracked_bot)
+class Track
   TRACK_POWER_ACCELERATION = 0.7
 
   attr_reader :power
   attr_accessor :target_power
 
-  def initialize(tracked_bot)
+  def initialize
     self.power = 0
     self.target_power = 0
-    super(tracked_bot)
   end
 
   def update_power(seconds)
@@ -103,4 +111,42 @@ class Track < Struct.new(:tracked_bot)
   protected
 
   attr_writer :power
+end
+
+class Gun
+  #alias :relative_angle :angle
+  
+  def initialize(initial_angle = 90.degrees)
+    self.current_vector = Vector(1, 0).rotate(initial_angle)
+    self.target_vector = self.current_vector
+  end
+
+  def update_angle(seconds)
+    angle_diff = self.current_vector.signed_angle_with(self.target_vector)
+
+    if angle_diff.abs < ANGULAR_VELOCITY * seconds
+      self.current_vector = self.current_vector.rotate(angle_diff)
+    else
+      self.current_vector = self.current_vector.rotate(ANGULAR_VELOCITY * seconds * angle_diff.sign)
+    end
+  end
+
+  def rotate(angle)
+    self.target_vector = self.current_vector.rotate(angle)
+  end
+
+  def vector
+    self.current_vector
+  end
+
+  def angle
+    Vector(1,0).signed_angle_with(self.vector)
+  end
+  
+  protected
+
+  ANGULAR_VELOCITY = 3
+
+  attr_accessor :current_vector
+  attr_accessor :target_vector
 end
