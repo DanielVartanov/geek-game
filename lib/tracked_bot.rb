@@ -10,13 +10,18 @@ class TrackedBot
     Line(left_track_position, right_track_position)
   end
 
-  def initialize
+  def initialize(initial_params)
     self.left_track = Track.new(self)
     self.right_track = Track.new(self)
 
-    self.position = Point(0, 0)
-    self.angle = 90.degrees
+    self.position = initial_params[:position] || Point(0, 0)
+    self.angle = initial_params[:angle] || 0
   end
+
+  def motor!(target_left_track_power, target_right_track_power)
+    self.left_track.target_power = target_left_track_power
+    self.right_track.target_power = target_right_track_power
+  end  
 
   def advance_tracks(seconds)
     movement_unit_vector = Vector(1, 0).rotate(angle).rotate(90.degrees)
