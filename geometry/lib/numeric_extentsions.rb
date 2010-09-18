@@ -8,7 +8,7 @@ class Numeric
   end
 
   def ===(other)
-    (self - other).abs <= Float::EPSILON * 2
+    (self - other).abs <= Float::EPSILON * 1e3
   end
 end
 
