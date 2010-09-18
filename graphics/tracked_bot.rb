@@ -7,7 +7,7 @@ module Graphics
     extend Forwardable
 
     def_delegators :tracked_bot, :position, :angle, :track_axis, :left_track, :right_track,
-                   :left_track_position, :right_track_position
+                   :left_track_position, :right_track_position, :gun_angle
 
     def draw_track(center, size)
       side_length = size.to_f
@@ -20,15 +20,30 @@ module Graphics
       surface.rectangle(corners, color)
     end
 
+    def draw_gun
+      barrel_end = position.advance_by(Vector(1, 0).rotate(gun_angle) * (::TrackedBot::AXIS_LENGTH / 2))
+      surface.line(Line(position, barrel_end), [0, 0xff, 0])
+    end
+
+    def draw_triangle(base)
+      surface.triangle(Point(base.x - 3, base.y).rotate_around(base, angle),
+                       Point(base.x, base.y + 5.2).rotate_around(base, angle),
+                       Point(base.x + 3, base.y).rotate_around(base, angle))
+    end
+
+
     def draw
       surface.line(track_axis)
-      
-      surface.triangle(Point(position.x - 3, position.y).rotate_around(position, angle),
-                       Point(position.x, position.y + 5.2).rotate_around(position, angle),
-                       Point(position.x + 3, position.y).rotate_around(position, angle))
 
+      axis_vector = Vector(1, 0).rotate(angle)
+
+      draw_triangle(position.advance_by(axis_vector * (::TrackedBot::AXIS_LENGTH / 4)))
+      draw_triangle(position.advance_by(axis_vector * (::TrackedBot::AXIS_LENGTH / 4 * (-1))))
+            
       draw_track(left_track_position, 8 * left_track.power)
       draw_track(right_track_position, 8 * right_track.power)
+
+      draw_gun
     end
   end
 end
