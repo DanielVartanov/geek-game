@@ -25,7 +25,7 @@ class Vector < Struct.new(:x, :y)
   end
   
   def rotate(angle)
-    self.to_point.rotate_around(Point[0, 0], angle).to_radius
+    self.to_point.rotate_around(Point(0, 0), angle).to_radius
   end
   
   def +(vector)
