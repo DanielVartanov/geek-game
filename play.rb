@@ -10,4 +10,11 @@ require 'client/init'
 maximum_resolution = Rubygame::Screen.get_resolution
 puts "This display can manage at least " + maximum_resolution.join("x")
 
-GeekGame::Client.new.run
+require 'drb'
+
+server_uri = "druby://desktop:1100"
+puts "Connecting to #{server_uri}"
+
+game_objects = DRbObject.new nil, server_uri
+
+GeekGame::Client.new(game_objects).run

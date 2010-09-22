@@ -1,6 +1,6 @@
 module GeekGame
-  class Client
-    def initialize
+  class Client < Struct.new(:game_objects)
+    def initialize(game_objects)
       @screen = Rubygame::Screen.new [1024,768], 0, [Rubygame::HWSURFACE, Rubygame::DOUBLEBUF]
       @screen.title = "GeekGame"
 
@@ -26,6 +26,8 @@ module GeekGame
       Rubygame::TTF.setup
       point_size = 12
       @font = Rubygame::TTF.new "/usr/share/fonts/truetype/ttf-dejavu/DejaVuSans-Bold.ttf", point_size
+
+      super(game_objects)
     end
 
     def run
@@ -49,7 +51,8 @@ module GeekGame
     def draw
       @screen.fill(:black)
 
-#      @bot.draw(@screen)
+      game_objects.bots.each { |bot| Graphics::TrackedBot.new(bot, @screen).draw }
+      
 
  #     text = "position: (#{@bot.position.x.to_i}, #{@bot.position.y.to_i}) angle: #{(@bot.angle * 180 / Math::PI).to_i} track power: [#{@bot.left_track.power}, #{@bot.right_track.power}]"
 

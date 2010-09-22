@@ -7,6 +7,12 @@ require "rubygame"
 require 'init'
 require 'server/init'
 
-puts "=== Geek Game === Starting server at port 8989"
+require 'drb'
 
-GeekGame::Server.new.run
+game_server = GeekGame::Server.new
+
+DRb.start_service "druby://desktop:1100", game_server.objects
+
+puts "=== Geek Game === Starting server at #{DRb.uri}"
+
+game_server.run
