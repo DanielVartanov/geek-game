@@ -15,17 +15,16 @@ module GeekGame
 
       # Bot
 
-      bot = TrackedBot.new
-      bot.left_track.target_power = 0.7
-      bot.right_track.target_power = 1
-
-      @objects = Objects.new([bot])
+      @objects = Objects.new([])
     end
 
     def run
       loop do
         seconds = @clock.tick.seconds
-        objects.bots.each { |bot| bot.update(seconds) }
+        time_step = 1e-3
+        (seconds.to_f / time_step).to_i.times do
+          objects.bots.each { |bot| bot.update(time_step) }
+        end
         update
       end
     end
