@@ -15,7 +15,7 @@ module GeekGame
       self.damage_value = MAX_DAMAGE_VALUE
       self.initial_position = self.position
 
-      super
+      super()
     end
 
     def update_position(seconds)

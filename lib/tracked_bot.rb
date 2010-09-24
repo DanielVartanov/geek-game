@@ -31,7 +31,7 @@ module GeekGame
       self.gun = Gun.new initial_params[:gun_relative_angle] || 90.degrees
       self.shells = []
 
-      super
+      super()
     end
 
     def take_damage(damage_value)
