@@ -2,10 +2,14 @@
 class TrackedBot
   MAX_VELOCITY = 70
   AXIS_LENGTH = 40
+  SHELL_RELOAD_TIME = 2
+  MAX_HEALTH_POINTS = 1000
 
   attr_reader :position, :angle
   attr_reader :left_track, :right_track
   attr_reader :gun
+  attr_reader :shells
+  attr_reader :health_points
 
   def track_axis
     Line(left_track_position, right_track_position)
@@ -18,7 +22,16 @@ class TrackedBot
     self.position = initial_params[:position] || Point(0, 0)
     self.angle = initial_params[:angle] || 0
 
+    self.health_points = MAX_HEALTH_POINTS
+    
     self.gun = Gun.new initial_params[:gun_relative_angle] || 90.degrees
+    self.shells = []
+  end
+
+  def take_damage(damage_value)
+    new_health_points_value = self.health_points - damage_value
+    
+    self.health_points = new_health_points_value > 0 ? new_health_points_value : 0
   end
 
   def gun_angle
@@ -62,7 +75,28 @@ class TrackedBot
       right_track.update_power(time_step)
       advance_tracks(time_step)
       gun.update_angle(time_step)
+
+      shells.each do |shell|
+        if shell.died?
+          shells.delete_at shells.index(shell)
+          next
+        end
+
+        shell.update_position(time_step)
+      end
     end
+  end
+
+  def fire!
+    return if last_shoot_time && (Time.now.to_f - self.last_shoot_time) < SHELL_RELOAD_TIME
+    
+    target_angle = self.gun_angle
+    axis_unit_vector = Vector(1, 0).rotate(target_angle)
+    start_pos = self.position.advance_by(axis_unit_vector * (AXIS_LENGTH/2))
+    
+    self.shells << Shell.new(:target_angle => target_angle, :position => start_pos)
+
+    self.last_shoot_time = Time.now.to_f
   end
 
   def draw(surface)
@@ -74,6 +108,9 @@ class TrackedBot
   attr_writer :position, :angle
   attr_writer :left_track, :right_track
   attr_writer :gun
+  attr_writer :shells
+  attr_accessor :last_shoot_time
+  attr_writer :health_points
 
   def left_track_position
     right_track_position.rotate_around(position, 180.degrees)
@@ -152,24 +189,69 @@ class Gun
 end
 
 class Shell
-  VELOCITY = 210
+  VELOCITY = 240
+  MAX_RANGE = 400
+  MAX_DAMAGE_VALUE = 300
 
   attr_reader :target_angle
   attr_reader :position
+  attr_reader :damage_value
   
   def initialize(initial_options)
+    self.died = false
     self.target_angle = initial_options[:target_angle] || 0
     self.position = initial_options[:position] || Point(0, 0)
+    self.damage_value = MAX_DAMAGE_VALUE
+    self.initial_position = self.position
   end
 
   def update_position(seconds)
     velocity_vector = Vector(1, 0).rotate(target_angle) * (VELOCITY * seconds)
 
-    self.position = self.position.advance_by(velocity_vector)
+    next_position = self.position.advance_by(velocity_vector)
+
+    if next_position.distance_to(self.initial_position) > MAX_RANGE
+      next_position = self.initial_position.advance_by(Vector(1, 0).rotate(self.target_angle) * MAX_RANGE)
+      die!
+    end
+
+    self.position = next_position
+  end
+
+  def died?
+    self.died
+  end
+
+  def die!
+    self.died = true
   end
 
   protected
 
   attr_writer :target_angle
   attr_writer :position
+  attr_writer :damage_value
+  attr_accessor :initial_position
+  attr_accessor :died
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -7,7 +7,7 @@ module Graphics
     extend Forwardable
 
     def_delegators :tracked_bot, :position, :angle, :track_axis, :left_track, :right_track,
-                   :left_track_position, :right_track_position, :gun_angle
+                   :left_track_position, :right_track_position, :gun_angle, :shells
 
     def draw_track(center, size)
       side_length = size.to_f
@@ -47,6 +47,10 @@ module Graphics
       draw_track(right_track_position, 8 * right_track.power)
 
       draw_gun
+
+      shells.each do |shell|
+        draw_shell(shell)
+      end
     end
   end
 end
