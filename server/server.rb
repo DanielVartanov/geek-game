@@ -1,3 +1,5 @@
+require 'active_support'
+
 module GeekGame
   Objects = Struct.new(:bots)
 
@@ -9,23 +11,31 @@ module GeekGame
       @queue.enable_new_style_events
 
       @clock = Rubygame::Clock.new
-      @clock.target_framerate = 50
+      @clock.target_framerate = 100
       @clock.calibrate
       @clock.enable_tick_events
 
       # Bot
 
-      @objects = Objects.new([])
+      bots = []
+      20.times { bots << create_bot } 
+      @objects = Objects.new(bots)
     end
 
     def run
       loop do
         seconds = @clock.tick.seconds
-        time_step = 1e-3
+        time_step = 1e-2
         (seconds.to_f / time_step).to_i.times do
-          objects.bots.each { |bot| bot.update(time_step) }
+          objects.bots.each { |bot| bot.update }
         end
         update
+      end
+    end
+
+    def create_bot
+      returning TrackedBot.new(:position => Point[50 * rand, 50 * rand], :angle => 180.degrees * rand) do |bot|
+        bot.motor!(rand * 2 - 1, rand * 2 - 1)
       end
     end
 

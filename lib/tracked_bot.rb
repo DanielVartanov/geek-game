@@ -54,15 +54,12 @@ class TrackedBot
     end
   end
 
-  def update(seconds)
-    time_step = 1e-3
-
-    (seconds.to_f / time_step).to_i.times do
-      left_track.update_power(time_step)
-      right_track.update_power(time_step)
-      advance_tracks(time_step)
-      gun.update_angle(time_step)
-    end
+  def update
+    time_step = 1e-1
+    left_track.update_power(time_step)
+    right_track.update_power(time_step)
+    advance_tracks(time_step)
+    gun.update_angle(time_step)
   end
 
   def draw(surface)
