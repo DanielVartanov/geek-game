@@ -1,10 +1,18 @@
 require 'active_support'
 
 module GeekGame
-  Objects = Struct.new(:bots)
+  class GameObjects < Struct.new(:bots, :shells)
+    def update(seconds)
+      self.all.each { |object| object.update(seconds) }
+    end
+
+    def all      
+      bots + shells
+    end
+  end
 
   class Server
-    attr_reader :objects
+    attr_reader :game_objects
     
     def initialize
       @queue = Rubygame::EventQueue.new
@@ -18,18 +26,15 @@ module GeekGame
       # Bot
 
       bots = []
-      20.times { bots << create_bot } 
-      @objects = Objects.new(bots)
+      2.times { bots << create_bot } 
+      @game_objects = GameObjects.new(bots, [])
     end
 
     def run
       loop do
         seconds = @clock.tick.seconds
-        time_step = 1e-2
-        (seconds.to_f / time_step).to_i.times do
-          objects.bots.each { |bot| bot.update }
-        end
-        update
+        update(seconds)
+        handle_events
       end
     end
 
@@ -39,7 +44,17 @@ module GeekGame
       end
     end
 
-    def update
+    def update(seconds)
+      time_step = 1e-2
+      
+      (seconds.to_f / time_step).to_i.times do
+        game_objects.update(time_step)
+      end
+
+      game_objects.update(seconds.to_f % time_step)
+    end
+
+    def handle_events
       @queue.each do |event|
         case event
         when Rubygame::Events::QuitRequested
