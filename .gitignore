@@ -1,2 +1,6 @@
 geometry/coverage
 eproject.cfg
+#*#
+*_flymake*
+\#*#
+\.#*
