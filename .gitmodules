@@ -1,0 +1,3 @@
+[submodule "vendor/scopes-n-groups"]
+	path = vendor/scopes-n-groups
+	url = git://github.com/DanielVartanov/scopes-n-groups.git
