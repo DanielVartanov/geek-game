@@ -84,4 +84,29 @@ describe Track do
       end
     end
   end
+
+  describe "#take_damage" do
+    describe "given damage value is less than the current health points" do
+      before do
+        @initial_health_points = TrackedBot::MAX_HEALTH_POINTS
+        @damage_value = @initial_health_points/2
+        @bot.take_damage @damage_value
+      end
+
+      it "should decrease health points according to the damage value" do
+        @bot.health_points.should === @initial_health_points - @damage_value
+      end
+    end
+
+    describe "given damage value is greater than the current health points" do
+      before do
+        @damage_value = TrackedBot::MAX_HEALTH_POINTS * 1.5
+        @bot.take_damage @damage_value
+      end
+
+      it "should set helth points to 0" do
+        @bot.health_points.should === 0
+      end
+    end
+  end
 end
