@@ -11,7 +11,7 @@ require 'drb'
 
 game_server = GeekGame::Server.new
 
-DRb.start_service "druby://desktop:1100", game_server.game_objects
+DRb.start_service "druby://desktop:1100", GeekGame.game_objects
 
 puts "=== Geek Game === Starting server at #{DRb.uri}"
 

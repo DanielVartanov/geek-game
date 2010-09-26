@@ -21,7 +21,7 @@ module Graphics
     end
 
     def draw_gun
-      barrel_end = position.advance_by(Vector(1, 0).rotate(gun_angle) * (::TrackedBot::AXIS_LENGTH / 2))
+      barrel_end = position.advance_by(Vector(1, 0).rotate(gun_angle) * (GeekGame::TrackedBot::AXIS_LENGTH / 2))
       surface.line(Line(position, barrel_end), [0, 0xff, 0])
     end
 
@@ -40,8 +40,8 @@ module Graphics
 
       axis_vector = Vector(1, 0).rotate(angle)
 
-      draw_triangle(position.advance_by(axis_vector * (::TrackedBot::AXIS_LENGTH / 4)))
-      draw_triangle(position.advance_by(axis_vector * (::TrackedBot::AXIS_LENGTH / 4 * (-1))))
+      draw_triangle(position.advance_by(axis_vector * (GeekGame::TrackedBot::AXIS_LENGTH / 4)))
+      draw_triangle(position.advance_by(axis_vector * (GeekGame::TrackedBot::AXIS_LENGTH / 4 * (-1))))
             
       draw_track(left_track_position, 8 * left_track.power)
       draw_track(right_track_position, 8 * right_track.power)

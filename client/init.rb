@@ -4,6 +4,7 @@ require ~'hud.rb'
 require ~'shapes.rb'
 require ~'point_extensions'
 
-require ~'base'
-require ~'tracked_bot'
+require ~'graphics/base'
+require ~'graphics/tracked_bot'
+
 require ~'client'
