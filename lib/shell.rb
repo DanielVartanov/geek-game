@@ -7,12 +7,14 @@ module GeekGame
     attr_reader :target_angle
     attr_reader :position
     attr_reader :damage_value
+    attr_reqder :owner
     
     def initialize(initial_options)
       self.died = false
       self.target_angle = initial_options[:target_angle] || 0
       self.position = initial_options[:position] || Point(0, 0)
       self.damage_value = MAX_DAMAGE_VALUE
+      self.owner = initial_options[:owner]
       self.initial_position = self.position
 
       super()
@@ -36,7 +38,7 @@ module GeekGame
     end
 
     def die!
-      #Yes, sir
+      #Yes, sir :-)
       self.died = true
     end
 
@@ -45,6 +47,7 @@ module GeekGame
     attr_writer :target_angle
     attr_writer :position
     attr_writer :damage_value
+    attr_writer :owner
     attr_accessor :initial_position
     attr_accessor :died
   end

@@ -63,7 +63,7 @@ module GeekGame
       unit_vector = Vector(1, 0).rotate(target_angle)
       start_pos = self.position.advance_by(unit_vector * (GUN::LENGTH)) # gun.barrel_ending
 
-      Shell.new(:target_angle => target_angle, :position => start_pos)
+      Shell.new(:target_angle => target_angle, :position => start_pos, :owner => self)
 
       self.last_shoot_time = Time.now.to_f
     end
