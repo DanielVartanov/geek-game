@@ -49,6 +49,33 @@ module GeekGame
       self.right_track.target_power = target_right_track_power
     end  
 
+    def update(seconds)
+      left_track.update_power(seconds)
+      right_track.update_power(seconds)
+      advance_tracks(seconds)
+      gun.update_angle(seconds)
+    end
+
+    def fire!
+      return if last_shoot_time && (Time.now.to_f - self.last_shoot_time) < SHELL_RELOAD_TIME
+
+      target_angle = self.gun_angle
+      unit_vector = Vector(1, 0).rotate(target_angle)
+      start_pos = self.position.advance_by(unit_vector * (GUN::LENGTH)) # gun.barrel_ending
+
+      Shell.new(:target_angle => target_angle, :position => start_pos)
+
+      self.last_shoot_time = Time.now.to_f
+    end
+
+    protected
+
+    attr_writer :position, :angle
+    attr_writer :left_track, :right_track
+    attr_writer :gun
+    attr_accessor :last_shoot_time
+    attr_writer :health_points
+
     def advance_tracks(seconds)
       movement_unit_vector = Vector(1, 0).rotate(angle).rotate(90.degrees)
       left_track_movement_vector = movement_unit_vector * MAX_VELOCITY * seconds * left_track.power
@@ -73,46 +100,6 @@ module GeekGame
       end
     end
 
-    def update(seconds)
-      left_track.update_power(seconds)
-      right_track.update_power(seconds)
-      advance_tracks(seconds)
-      gun.update_angle(seconds)
-
-      shells.each do |shell|
-        if shell.died?
-          shells.delete_at shells.index(shell)
-          next
-        end
-
-        shell.update_position(time_step)
-      end
-    end
-
-    def fire!
-      return if last_shoot_time && (Time.now.to_f - self.last_shoot_time) < SHELL_RELOAD_TIME
-      
-      target_angle = self.gun_angle
-      axis_unit_vector = Vector(1, 0).rotate(target_angle)
-      start_pos = self.position.advance_by(axis_unit_vector * (AXIS_LENGTH/2))
-      
-      self.shells << Shell.new(:target_angle => target_angle, :position => start_pos)
-
-      self.last_shoot_time = Time.now.to_f
-    end
-
-    def draw(surface)
-      Graphics::TrackedBot.new(self, surface).draw
-    end
-
-    protected
-
-    attr_writer :position, :angle
-    attr_writer :left_track, :right_track
-    attr_writer :gun
-    attr_writer :shells
-    attr_accessor :last_shoot_time
-    attr_writer :health_points
 
     def left_track_position
       right_track_position.rotate_around(position, 180.degrees)

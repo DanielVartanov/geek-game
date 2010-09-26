@@ -85,6 +85,14 @@ describe Track do
     end
   end
 
+  describe "#can_shoot?" do
+    # TimeCop is needed
+  end
+
+  describe "#barrel_ending" do
+    
+  end
+
   describe "#take_damage" do
     describe "given damage value is less than the current health points" do
       before do
@@ -104,7 +112,7 @@ describe Track do
         @bot.take_damage @damage_value
       end
 
-      it "should set helth points to 0" do
+      it "should set health points to 0" do
         @bot.health_points.should === 0
       end
     end

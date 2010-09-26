@@ -25,10 +25,6 @@ module Graphics
       surface.line(Line(position, barrel_end), [0, 0xff, 0])
     end
 
-    def draw_shell(shell)
-      surface.draw_circle_s(shell.position.to_screen(surface), 3, [0, 0, 0xff])
-    end
-
     def draw_triangle(base)
       surface.triangle(Point(base.x - 3, base.y).rotate_around(base, angle),
                        Point(base.x, base.y + 5.2).rotate_around(base, angle),
@@ -47,10 +43,6 @@ module Graphics
       draw_track(right_track_position, 8 * right_track.power)
 
       draw_gun
-
-      shells.each do |shell|
-        draw_shell(shell)
-      end
     end
   end
 end

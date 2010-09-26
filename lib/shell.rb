@@ -18,7 +18,7 @@ module GeekGame
       super()
     end
 
-    def update_position(seconds)
+    def update(seconds)
       velocity_vector = Vector(1, 0).rotate(target_angle) * (VELOCITY * seconds)
 
       next_position = self.position.advance_by(velocity_vector)
@@ -36,6 +36,7 @@ module GeekGame
     end
 
     def die!
+      #Yes, sir
       self.died = true
     end
 

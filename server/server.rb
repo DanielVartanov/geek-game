@@ -25,10 +25,12 @@ module GeekGame
     def create_bot
       returning TrackedBot.new(:position => Point[50 * rand, 50 * rand], :angle => 180.degrees * rand) do |bot|
         bot.motor!(rand * 2 - 1, rand * 2 - 1)
+        bot.fire!
       end
     end
 
     def update(seconds)
+      GeekGame.game_objects.bots.each(&:fire!)
       time_step = 1e-2
       
       (seconds.to_f / time_step).to_i.times do
