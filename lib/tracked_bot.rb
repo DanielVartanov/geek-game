@@ -56,16 +56,19 @@ module GeekGame
       gun.update_angle(seconds)
     end
 
+    def can_shoot?
+      # last_shoot_time && (Time.now.to_f - self.last_shoot_time) < SHELL_RELOAD_TIME
+    end
+
+    def barrel_ending
+      # self.position.advance_by(unit_vector * (GUN::LENGTH)) # gun.barrel_ending
+    end
+
     def fire!
-      return if last_shoot_time && (Time.now.to_f - self.last_shoot_time) < SHELL_RELOAD_TIME
+      return unless can_shoot?
 
-      target_angle = self.gun_angle
-      unit_vector = Vector(1, 0).rotate(target_angle)
-      start_pos = self.position.advance_by(unit_vector * (GUN::LENGTH)) # gun.barrel_ending
-
-      Shell.new(:target_angle => target_angle, :position => start_pos, :owner => self)
-
-      self.last_shoot_time = Time.now.to_f
+      Shell.new(:target_angle => self.gun_angle, :position => barrel_egine, :owner => self)
+      self.last_shoot_time = Time.now
     end
 
     protected
