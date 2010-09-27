@@ -39,6 +39,10 @@ module GeekGame
       MAX_DAMAGE
     end
 
+    def hit?(bot)
+      position.distance_to(bot.position) <= TrackedBot::AXIS_LENGTH.to_f / 2
+    end
+
     protected
 
     attr_writer :angle
