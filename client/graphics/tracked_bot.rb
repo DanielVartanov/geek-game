@@ -31,6 +31,21 @@ module Graphics
                        Point(base.x + 3, base.y).rotate_around(base, angle))
     end
 
+    def draw_health_bar
+      full_length = GeekGame::TrackedBot::AXIS_LENGTH
+      length = full_length * tracked_bot.health_points.to_f / GeekGame::TrackedBot::MAX_HEALTH_POINTS
+      height = 3
+
+      left_top = position.advance_by(Vector(-full_length.to_f / 2, full_length.to_f / 2 + 15))
+      
+      corners = [left_top,
+                 left_top.advance_by(Vector(length, 0)),
+                 left_top.advance_by(Vector(length, -height)),
+                 left_top.advance_by(Vector(0, -height))
+                ]
+      surface.rectangle(corners, [0xff, 0, 0])
+    end
+
     def draw
       surface.line(track_axis)
 
@@ -43,6 +58,8 @@ module Graphics
       draw_track(right_track_position, 8 * right_track.power)
 
       draw_gun
+
+      draw_health_bar
     end
   end
 end
