@@ -45,7 +45,7 @@ module GeekGame
 
       GeekGame.game_objects.shells.each do |shell|
         GeekGame.game_objects.bots.each do |bot|
-          if bot != shell.owner and shell.hit?(bot)
+          if shell.owner != bot and shell.hit?(bot)
             bot.take_damage(shell.damage)
             shell.die!
           end

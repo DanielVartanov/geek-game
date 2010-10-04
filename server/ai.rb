@@ -38,7 +38,6 @@ module GeekGame
     end
 
     def worth_fire?(target)
-      puts angle_to(target) - gun_angle < 10.degrees and close_enough_to_shoot(target)
       angle_to(target) - gun_angle < 10.degrees and close_enough_to_shoot(target)
     end
 

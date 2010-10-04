@@ -30,13 +30,19 @@ module GeekGame
       
       self.gun = Gun.new initial_params[:gun_relative_angle] || 90.degrees
 
+      self.last_shoot_time = Time.now
+
       super()
     end
 
     def take_damage(damage_value)
+      puts "take_damage(#{damage_value})"
+      
       new_health_points_value = self.health_points - damage_value
       
       self.health_points = new_health_points_value > 0 ? new_health_points_value : 0
+
+      die! if health_points.zero?
     end
 
     def gun_angle
@@ -60,15 +66,13 @@ module GeekGame
     end
 
     def barrel_ending
-      # 
+      # barrel_ending = self.position.advance_by(unit_vector * (GUN::LENGTH)) # gun.barrel_ending
     end
 
     def fire!
-      return unless last_shoot_time && (Time.now.to_f - self.last_shoot_time) < SHELL_RELOAD_TIME
+      return unless (Time.now - self.last_shoot_time) > SHELL_RELOAD_TIME
+      Shell.new(:angle => self.gun_angle, :position => position, :owner => self)
 
-      barrel_ending = self.position.advance_by(unit_vector * (GUN::LENGTH)) # gun.barrel_ending
-
-      Shell.new(:target_angle => self.gun_angle, :position => barrel_ending, :owner => self)
       self.last_shoot_time = Time.now
     end
 
