@@ -57,17 +57,19 @@ module GeekGame
     end
 
     def can_shoot?
-      # last_shoot_time && (Time.now.to_f - self.last_shoot_time) < SHELL_RELOAD_TIME
+      # 
     end
 
     def barrel_ending
-      # self.position.advance_by(unit_vector * (GUN::LENGTH)) # gun.barrel_ending
+      # 
     end
 
     def fire!
-      return unless can_shoot?
+      return unless last_shoot_time && (Time.now.to_f - self.last_shoot_time) < SHELL_RELOAD_TIME
 
-      Shell.new(:target_angle => self.gun_angle, :position => barrel_egine, :owner => self)
+      barrel_ending = self.position.advance_by(unit_vector * (GUN::LENGTH)) # gun.barrel_ending
+
+      Shell.new(:target_angle => self.gun_angle, :position => barrel_ending, :owner => self)
       self.last_shoot_time = Time.now
     end
 
