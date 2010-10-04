@@ -24,7 +24,7 @@ module GeekGame
     end
 
     def create_bot
-      TrackedBot.new(:position => Point[350 * rand, 350 * rand], :angle => 180.degrees * rand)
+      TrackedBot.new(:position => Point[300 * rand * (rand - 0.5).sign, 300 * rand * (rand - 0.5).sign], :angle => 180.degrees * rand)
     end
 
     def update(seconds)
