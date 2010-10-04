@@ -31,7 +31,7 @@ module GeekGame
     
     protected
 
-    ANGULAR_VELOCITY = 3
+    ANGULAR_VELOCITY = 360.degrees
 
     attr_accessor :current_vector
     attr_accessor :target_vector
