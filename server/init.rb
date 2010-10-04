@@ -1,2 +1,4 @@
-__DIR__ = File.dirname(__FILE__)
-require File.join(__DIR__, 'server.rb')
+require 'dirge'
+
+require ~'server'
+require ~'ai'

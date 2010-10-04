@@ -11,7 +11,8 @@ module GeekGame
       @clock.calibrate
       @clock.enable_tick_events
 
-      2.times { GeekGame.game_objects << create_bot }
+      @red = AI.new([create_bot])
+      @blue = AI.new([create_bot])
     end
 
     def run
@@ -23,9 +24,7 @@ module GeekGame
     end
 
     def create_bot
-      returning TrackedBot.new(:position => Point[50 * rand, 50 * rand], :angle => 180.degrees * rand) do |bot|
-
-      end
+      TrackedBot.new(:position => Point[350 * rand, 350 * rand], :angle => 180.degrees * rand)
     end
 
     def update(seconds)
@@ -39,10 +38,13 @@ module GeekGame
     end
 
     def update_objects(seconds)
+      @red.act!(seconds)
+      @blue.act!(seconds)
+
       GeekGame.game_objects.update(seconds)
 
-      GeekGame.shells.each do |shell|
-        GeekGame.bots.each do |bot|
+      GeekGame.game_objects.shells.each do |shell|
+        GeekGame.game_objects.bots.each do |bot|
           if bot != shell.owner and shell.hit?(bot)
             bot.take_damage(shell.damage)
             shell.die!
