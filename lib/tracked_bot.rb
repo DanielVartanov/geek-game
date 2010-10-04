@@ -29,7 +29,6 @@ module GeekGame
       self.health_points = MAX_HEALTH_POINTS
       
       self.gun = Gun.new initial_params[:gun_relative_angle] || 90.degrees
-      self.shells = []
 
       super()
     end
