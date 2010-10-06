@@ -52,7 +52,8 @@ module GeekGame
       @screen.fill(:black)
 
       game_objects.bots.each { |bot| Graphics::TrackedBot.new(bot, @screen).draw }
-      game_objects.shells.each { |shell| Graphics::Shell.new(shell, @screen).draw }      
+      game_objects.shells.each { |shell| Graphics::Shell.new(shell, @screen).draw }
+      game_objects.factories.each { |factory| Graphics::Factory.new(factory, @screen).draw }
 
  #     text = "position: (#{@bot.position.x.to_i}, #{@bot.position.y.to_i}) angle: #{(@bot.angle * 180 / Math::PI).to_i} track power: [#{@bot.left_track.power}, #{@bot.right_track.power}]"
 
