@@ -10,6 +10,74 @@ describe Track do
     @track.power.should === 0
   end
 
+  describe "#battery" do
+    context "when tracked bot is created" do
+      before do
+        @bot = TrackedBot.new
+      end
+
+      it "should have battery" do
+        @bot.should respond_to(:battery)
+      end
+
+      it "should have full charge" do
+        @bot.battery.charge.should === 1.0
+      end
+
+      context "when bot shoots" do
+        before { @bot.fire! }
+
+        it "should be decreased by a constant value" do
+          @bot.battery.charge.should == 1 - TrackedBot::SHOOTING_COST
+        end
+      end
+
+      context "when bot moves" do
+        context "when one track moves" do
+          it "should be decreased according to tracks power" do
+            pending
+          end
+        end
+
+        context "when both tracks move" do
+          it "should be decreased according to tracks power" do
+            pending
+          end
+        end
+
+        context "when bot is stopped" do
+          it "should not be discharged at all" do
+            pending
+          end
+        end
+      end
+
+      context "when battery charge is too low" do
+        it "should be unable to move" do
+          pending
+        end
+
+        it "should be unable to fire" do
+          pending
+        end
+      end
+
+      context "when battery is completely dicharged while moving" do
+        it "should stop slowly according to tracks acceleration" do
+          pending
+        end
+      end
+    end
+  end
+
+  describe "firing" do
+    context "when bot is just created" do
+      it "should be able to fire immediately" do
+        pending
+      end
+    end
+  end
+
   describe "#udpate_power" do
     describe "when target power is far from current" do
       describe "when target power is greater than current" do

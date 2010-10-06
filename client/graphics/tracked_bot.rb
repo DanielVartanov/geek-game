@@ -46,6 +46,21 @@ module Graphics
       surface.rectangle(corners, player.color)
     end
 
+    def draw_battery_charge
+      full_length = GeekGame::TrackedBot::AXIS_LENGTH / 2
+      actual_length = full_length * tracked_bot.battery.charge
+      width = 3
+
+      left_bottom = position.advance_by(Vector(-GeekGame::TrackedBot::AXIS_LENGTH / 2 - 10, 0))
+
+      corners = [left_bottom,
+                 left_bottom.advance_by(Vector(0, actual_length)),
+                 left_bottom.advance_by(Vector(width, actual_length)),
+                 left_bottom.advance_by(Vector(width, 0))
+                ]
+      surface.rectangle(corners, [128, 255, 128])
+    end
+
     def draw
       surface.line(track_axis)
 
@@ -60,6 +75,8 @@ module Graphics
       draw_gun
 
       draw_health_bar
+
+      draw_battery_charge
     end
   end
 end

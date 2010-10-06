@@ -3,8 +3,10 @@ module GeekGame
   class TrackedBot < GameObject
     MAX_VELOCITY = 70
     AXIS_LENGTH = 40
-    SHELL_RELOAD_TIME = 2
+    SHELL_RELOAD_TIME = 2.seconds
     MAX_HEALTH_POINTS = 1000
+    MOVEMENT_COST = 0.025
+    SHOOTING_COST = 0.1
 
     # alias :gun :gun_proxy
     # protected attr_reader :actual_gun
@@ -14,6 +16,7 @@ module GeekGame
     attr_reader :gun
     attr_reader :shells
     attr_reader :health_points
+    attr_reader :battery
 
     def track_axis
       Line(left_track_position, right_track_position)
@@ -31,7 +34,9 @@ module GeekGame
       
       self.gun = Gun.new initial_params[:gun_relative_angle] || 90.degrees
 
-      self.last_shoot_time = Time.now
+      self.last_shoot_time = Time.now - SHELL_RELOAD_TIME
+
+      self.battery = Battery.new
 
       super()
     end
@@ -51,12 +56,14 @@ module GeekGame
     def motor!(target_left_track_power, target_right_track_power)
       self.left_track.target_power = target_left_track_power
       self.right_track.target_power = target_right_track_power
-    end  
+    end
 
-    def update(seconds)
+    def update(seconds)      
       left_track.update_power(seconds)
       right_track.update_power(seconds)
+      stop! if battery.charge < estimated_advancing_cost(seconds)
       advance_tracks(seconds)
+      discharge_battery(seconds)
       gun.update_angle(seconds)
     end
 
@@ -70,7 +77,10 @@ module GeekGame
 
     def fire!
       return unless (Time.now - self.last_shoot_time) > SHELL_RELOAD_TIME
+      return if battery.charge < SHOOTING_COST
+
       Shell.new(:angle => self.gun_angle, :position => position, :owner => self)
+      battery.discharge_by(SHOOTING_COST)
 
       self.last_shoot_time = Time.now
     end
@@ -79,9 +89,18 @@ module GeekGame
 
     attr_writer :position, :angle, :player
     attr_writer :left_track, :right_track
-    attr_writer :gun
+    attr_writer :gun, :battery
     attr_accessor :last_shoot_time
     attr_writer :health_points
+
+    def discharge_battery(seconds)
+      battery.discharge_by(seconds * MOVEMENT_COST * left_track.power)
+      battery.discharge_by(seconds * MOVEMENT_COST * right_track.power)
+    end
+
+    def estimated_advancing_cost(seconds)
+      MOVEMENT_COST * seconds * (left_track.power + right_track.power)
+    end
 
     def advance_tracks(seconds)
       movement_unit_vector = Vector(1, 0).rotate(angle).rotate(90.degrees)
@@ -106,7 +125,6 @@ module GeekGame
         self.position = position.rotate_around(intersection_point, angle_diff)
       end
     end
-
 
     def left_track_position
       right_track_position.rotate_around(position, 180.degrees)
