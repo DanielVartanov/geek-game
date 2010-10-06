@@ -12,7 +12,7 @@ puts "This display can manage at least " + maximum_resolution.join("x")
 
 require 'drb'
 
-server_uri = "druby://desktop:1100"
+server_uri = "druby://localhost:1100"
 puts "Connecting to #{server_uri}"
 
 game_objects = DRbObject.new nil, server_uri
