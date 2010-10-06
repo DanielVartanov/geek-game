@@ -10,8 +10,13 @@ module GeekGame
         :player => self
     end
 
+    def factory=(factory)
+      factory.player = self
+      @factory = factory
+    end    
+
     protected
 
-    attr_writer :factory, :color
+    attr_writer :color
   end
 end

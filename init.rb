@@ -1,3 +1,4 @@
+require 'rubygems'
 require 'dirge'
 
 require ~'vendor/scopes-n-groups/lib/scope'

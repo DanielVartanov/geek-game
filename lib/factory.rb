@@ -3,6 +3,7 @@ module GeekGame
     PRODUCTION_TIME = 5
     
     attr_reader :position, :angle, :player, :production_start_time
+    attr_accessor :player
 
     def initialize(options)
       self.position = options[:position]
@@ -51,7 +52,7 @@ module GeekGame
         :player => player
     end
     
-    attr_writer  :position, :angle, :player, :production_start_time
+    attr_writer  :position, :angle, :production_start_time
     attr_accessor :producing
   end
 end
