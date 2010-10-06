@@ -9,7 +9,7 @@ module GeekGame
     # alias :gun :gun_proxy
     # protected attr_reader :actual_gun
 
-    attr_reader :position, :angle
+    attr_reader :position, :angle, :player
     attr_reader :left_track, :right_track
     attr_reader :gun
     attr_reader :shells
@@ -25,6 +25,7 @@ module GeekGame
 
       self.position = initial_params[:position] || Point(0, 0)
       self.angle = initial_params[:angle] || 0
+      self.player = initial_params[:player]
 
       self.health_points = MAX_HEALTH_POINTS
       
@@ -36,8 +37,6 @@ module GeekGame
     end
 
     def take_damage(damage_value)
-      puts "take_damage(#{damage_value})"
-      
       new_health_points_value = self.health_points - damage_value
       
       self.health_points = new_health_points_value > 0 ? new_health_points_value : 0
@@ -78,7 +77,7 @@ module GeekGame
 
     protected
 
-    attr_writer :position, :angle
+    attr_writer :position, :angle, :player
     attr_writer :left_track, :right_track
     attr_writer :gun
     attr_accessor :last_shoot_time

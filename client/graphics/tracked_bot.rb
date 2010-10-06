@@ -7,7 +7,7 @@ module Graphics
     extend Forwardable
 
     def_delegators :tracked_bot, :position, :angle, :track_axis, :left_track, :right_track,
-                   :left_track_position, :right_track_position, :gun_angle, :shells
+                   :left_track_position, :right_track_position, :gun_angle, :shells, :player
 
     def draw_track(center, size)
       side_length = size.to_f
@@ -43,7 +43,7 @@ module Graphics
                  left_top.advance_by(Vector(length, -height)),
                  left_top.advance_by(Vector(0, -height))
                 ]
-      surface.rectangle(corners, [0xff, 0, 0])
+      surface.rectangle(corners, player.color)
     end
 
     def draw

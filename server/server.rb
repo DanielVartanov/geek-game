@@ -11,8 +11,10 @@ module GeekGame
       @clock.calibrate
       @clock.enable_tick_events
 
-      @red = AI.new([create_bot])
-      @blue = AI.new([create_bot])
+      @red = Player.new :position => Point(-400, -300), :orientation => 45.degrees, :color => [0xff, 0, 0]
+      @blue = Player.new :position => Point(400, 300), :orientation => -135.degrees, :color => [0, 0, 0xff]
+
+      @ai = [AI.new(@red), AI.new(@blue)]
     end
 
     def run
@@ -21,10 +23,6 @@ module GeekGame
         update(seconds)
         handle_events
       end
-    end
-
-    def create_bot
-      TrackedBot.new(:position => Point[300 * rand * (rand - 0.5).sign, 300 * rand * (rand - 0.5).sign], :angle => 180.degrees * rand)
     end
 
     def update(seconds)
@@ -38,8 +36,10 @@ module GeekGame
     end
 
     def update_objects(seconds)
-      @red.act!(seconds)
-      @blue.act!(seconds)
+      @ai.each { |ai| ai.act!(seconds) }
+
+      @red.factory.update(seconds)
+      @blue.factory.update(seconds)
 
       GeekGame.game_objects.update(seconds)
 
