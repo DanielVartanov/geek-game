@@ -42,20 +42,40 @@ module GeekGame
     end
 
     def engage(target)
-      aim(target)
       advance_to(target)
       stop! if distance_to(target) < 300
+    end
+
+    def move_aside
+      direction = (rand * 2 - 1).sign
+      if direction > 0
+        motor!(0.4, 1)
+      else
+        motor!(1, 0.4)
+      end
+    end
+
+    def shoot(target)
+      aim(target)
       fire! if worth_fire?(target)
+    end
+
+    def stopped?
+      left_track.power.zero? and right_track.power.zero?
     end
   end
 
   TrackedBot.class_eval { include TrackedBotExtensions }
 
   class AI
-    attr_accessor :my_bots
+    attr_accessor :player
     
-    def initialize(my_bots)
-      self.my_bots = my_bots
+    def initialize(player)
+      self.player = player
+    end
+
+    def my_bots
+      GeekGame.game_objects.bots.select { |bot| bot.player == player }
     end
 
     def enemy_bots
@@ -63,10 +83,15 @@ module GeekGame
     end
 
     def act!(seconds)
+      player.factory.produce!
       target = enemy_bots.first
       return if target.nil?
-      my_bots.each do |my_bot|
-        my_bot.engage(target)
+      my_bots.each do |bot|
+        if bot.stopped?
+          bot.move_aside
+        end
+        bot.engage(target) if bot.life_time > 2 + rand * 32
+        bot.shoot(target)
       end
     end
   end
