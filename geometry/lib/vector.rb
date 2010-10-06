@@ -2,12 +2,20 @@ class Vector < Struct.new(:x, :y)
   def self.by_end_points(origin_point, end_point)
     self.new(end_point.x - origin_point.x, end_point.y - origin_point.y)
   end
+
+  def self.polar(modulus, angle)
+    self.new(modulus * Math.cos(angle), modulus * Math.sin(angle))
+  end
+
+  def ==(another_vector)
+    x === another_vector.x && y === another_vector.y
+  end
   
   def modulus      
     Math.hypot(x ,y)
   end
 
-  def signed_angle
+  def angle
     Vector(1, 0).signed_angle_with(self)
   end
 
