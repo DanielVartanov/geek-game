@@ -84,13 +84,14 @@ module GeekGame
 
     def act!(seconds)
       player.factory.produce!
-      target = enemy_bots.first
+      dangerous_bots = enemy_bots.reject { |bot| bot.battery.charge < TrackedBot::SHOOTING_COST }
+      target = dangerous_bots.sort { |left, right| left.health_points <=> right.health_points }.first
       return if target.nil?
       my_bots.each do |bot|
         if bot.stopped?
           bot.move_aside
         end
-        bot.engage(target) if bot.life_time > 2 + rand * 32
+        bot.engage(target) if bot.life_time > rand * 400
         bot.shoot(target)
       end
     end
