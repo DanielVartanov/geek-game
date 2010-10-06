@@ -2,11 +2,11 @@ module GeekGame
   class Factory < GameObject
     PRODUCTION_TIME = 5
     
-    attr_reader :position, :orientation, :player, :production_start_time
+    attr_reader :position, :angle, :player, :production_start_time
 
     def initialize(options)
       self.position = options[:position]
-      self.orientation = options[:orientation]
+      self.angle = options[:angle]
       self.player = options[:player]
       self.producing = false
 
@@ -27,8 +27,8 @@ module GeekGame
       end      
     end
 
-    def orientation_vector
-      Vector(1, 0).rotate(orientation)
+    def orientation
+      Vector.polar(1, angle)
     end
 
     def producing?
@@ -51,7 +51,7 @@ module GeekGame
         :player => player
     end
     
-    attr_writer  :position, :orientation, :player, :production_start_time
+    attr_writer  :position, :angle, :player, :production_start_time
     attr_accessor :producing
   end
 end
