@@ -4,10 +4,6 @@ module GeekGame
 
     def initialize(options)
       self.color = options[:color]
-
-      self.factory = Factory.new :position => options[:position],
-        :orientation => options[:orientation],
-        :player => self
     end
 
     def factory=(factory)

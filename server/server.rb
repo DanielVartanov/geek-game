@@ -11,8 +11,11 @@ module GeekGame
       @clock.calibrate
       @clock.enable_tick_events
 
-      @red = Player.new :position => Point(-400, -300), :orientation => 45.degrees, :color => [0xff, 0, 0]
-      @blue = Player.new :position => Point(400, 300), :orientation => -135.degrees, :color => [0, 0, 0xff]
+      @red = Player.new :color => [0xff, 0, 0]
+      @red.factory = Factory.new :position => Point(-400, -300), :angle => 45.degrees
+
+      @blue = Player.new :color => [0, 0, 0xff]
+      @blue.factory = Factory.new :position => Point(400, 300), :angle => -135.degrees
 
       @ai = [AI.new(@red), AI.new(@blue)]
     end

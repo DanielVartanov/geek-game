@@ -4,7 +4,7 @@ module Graphics
 
     extend Forwardable
 
-    def_delegators :factory, :position, :orientation, :player
+    def_delegators :factory, :position, :angle, :player
 
     def draw
       radius = 25

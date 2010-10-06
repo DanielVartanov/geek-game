@@ -47,8 +47,8 @@ module GeekGame
     protected
 
     def create_bot
-      TrackedBot.new :position => self.position.advance_by(orientation_vector * 25),
-        :angle => orientation - 90.degrees,
+      TrackedBot.new :position => self.position.advance_by(orientation * 25),
+        :angle => angle - 90.degrees,
         :player => player
     end
     
