@@ -1,5 +1,7 @@
 module GeekGame
   module TrackedBotExtensions
+    attr_accessor :threshold
+    
     def vector_to(target)
       Vector.by_end_points(self.position, target.position)
     end
@@ -46,12 +48,12 @@ module GeekGame
       stop! if distance_to(target) < 300
     end
 
-    def move_aside
+    def turn_aside
       direction = (rand * 2 - 1).sign
       if direction > 0
-        motor!(0.4, 1)
+        motor!(0, 1)
       else
-        motor!(1, 0.4)
+        motor!(1, 0)
       end
     end
 
@@ -89,10 +91,16 @@ module GeekGame
       return if target.nil?
       my_bots.each do |bot|
         if bot.stopped?
-          bot.move_aside
+          bot.turn_aside
+          bot.threshold = 0.2 + rand * 0.8
         end
-        bot.engage(target) if bot.life_time > rand * 400
-        bot.shoot(target)
+        bot.motor!(1, 1) if bot.life_time > bot.threshold and bot.life_time < bot.threshold * 12
+        bot.engage(target) if bot.life_time > bot.threshold * 12
+        if bot.battery.charge < 0.2
+          bot.engage(player.factory)
+        else
+          bot.shoot(target)
+        end
       end
     end
   end
