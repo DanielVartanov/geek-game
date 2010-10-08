@@ -1,6 +1,6 @@
 require 'rubygems'
 require 'dirge'
-require 'active_support'
+require 'active_support/core_ext/numeric/time'
 
 require ~'vendor/scopes-n-groups/lib/scope'
 
@@ -14,4 +14,5 @@ require ~'lib/shell'
 require ~'lib/track'
 require ~'lib/battery'
 require ~'lib/tracked_bot'
+require ~'lib/recharger'
 require ~'lib/factory'

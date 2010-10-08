@@ -7,15 +7,17 @@ module GeekGame
       @queue.enable_new_style_events
 
       @clock = Rubygame::Clock.new
-      @clock.target_framerate = 100
+      @clock.target_framerate = 50
       @clock.calibrate
       @clock.enable_tick_events
 
       @red = Player.new :color => [0xff, 0, 0]
-      @red.factory = Factory.new :position => Point(-400, -300), :angle => 45.degrees
+      @red.factory = Factory.new :position => Point(-800, -400), :angle => 45.degrees
+      Recharger.new :position => @red.factory.position, :player => @red
 
       @blue = Player.new :color => [0, 0, 0xff]
-      @blue.factory = Factory.new :position => Point(400, 300), :angle => -135.degrees
+      @blue.factory = Factory.new :position => Point(800, 400), :angle => -135.degrees
+      Recharger.new :position => @blue.factory.position, :player => @blue
 
       @ai = [AI.new(@red), AI.new(@blue)]
     end
@@ -40,9 +42,6 @@ module GeekGame
 
     def update_objects(seconds)
       @ai.each { |ai| ai.act!(seconds) }
-
-      @red.factory.update(seconds)
-      @blue.factory.update(seconds)
 
       GeekGame.game_objects.update(seconds)
 

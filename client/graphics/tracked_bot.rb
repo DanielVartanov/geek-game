@@ -47,11 +47,11 @@ module Graphics
     end
 
     def draw_battery_charge
-      full_length = GeekGame::TrackedBot::AXIS_LENGTH / 2
+      full_length = GeekGame::TrackedBot::AXIS_LENGTH * 0.75
       actual_length = full_length * tracked_bot.battery.charge
       width = 3
 
-      left_bottom = position.advance_by(Vector(-GeekGame::TrackedBot::AXIS_LENGTH / 2 - 10, 0))
+      left_bottom = position.advance_by(Vector(-GeekGame::TrackedBot::AXIS_LENGTH / 2 - 10, -20))
 
       corners = [left_bottom,
                  left_bottom.advance_by(Vector(0, actual_length)),

@@ -1,7 +1,7 @@
 module GeekGame
   class Client < Struct.new(:game_objects)
     def initialize(game_objects)
-      @screen = Rubygame::Screen.new [1024,768], 0, [Rubygame::HWSURFACE, Rubygame::DOUBLEBUF]
+      @screen = Rubygame::Screen.new [1920,1000], 0, [Rubygame::HWSURFACE, Rubygame::DOUBLEBUF]
       @screen.title = "GeekGame"
 
       @queue = Rubygame::EventQueue.new
@@ -54,6 +54,7 @@ module GeekGame
       game_objects.bots.each { |bot| Graphics::TrackedBot.new(bot, @screen).draw }
       game_objects.shells.each { |shell| Graphics::Shell.new(shell, @screen).draw }
       game_objects.factories.each { |factory| Graphics::Factory.new(factory, @screen).draw }
+      game_objects.rechargers.each { |recharger| Graphics::Recharger.new(recharger, @screen).draw }
 
  #     text = "position: (#{@bot.position.x.to_i}, #{@bot.position.y.to_i}) angle: #{(@bot.angle * 180 / Math::PI).to_i} track power: [#{@bot.left_track.power}, #{@bot.right_track.power}]"
 

@@ -13,6 +13,11 @@ module GeekGame
       self.charge = 0 if self.charge < 0
     end
 
+    def charge_by(amount)
+      self.charge += amount
+      self.charge = 1 if self.charge > 1
+    end
+
     protected
 
     attr_writer :charge
