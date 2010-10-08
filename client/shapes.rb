@@ -3,6 +3,10 @@ module Shapes
     _draw_polygon( points, color, true, true )
     return self
   end
+
+  def circle(center, radius, color)
+    draw_circle_a(center.to_screen(self), radius, color)
+  end
   
   def line(line, color=default_color)
     draw_line(line.point1.to_screen(self), line.point2.to_screen(self), color)
