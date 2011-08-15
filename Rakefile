@@ -1,7 +1,6 @@
 require 'rubygems'
-require 'spec/rake/spectask'
+require "rspec/core/rake_task"
 
-Spec::Rake::SpecTask.new(:spec) do |t|
-  t.spec_files = Dir.glob('spec/**/*_spec.rb')
-#  t.rcov = true
+RSpec::Core::RakeTask.new(:spec) do |spec|
+  spec.pattern = 'spec/**/*_spec.rb'
 end
