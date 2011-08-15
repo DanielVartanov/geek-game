@@ -1,0 +1,52 @@
+GEM
+  remote: http://rubygems.org/
+  specs:
+    active_support (3.0.0)
+      activesupport (= 3.0.0)
+    activesupport (3.0.0)
+    archive-tar-minitar (0.5.2)
+    callsite (0.0.5)
+      bundler (~> 1.0.0)
+    columnize (0.3.4)
+    diff-lcs (1.1.2)
+    dirge (0.0.5)
+      callsite (>= 0.0.2)
+    ffi (1.0.9)
+    linecache19 (0.5.12)
+      ruby_core_source (>= 0.1.4)
+    nice-ffi (0.4)
+      ffi (>= 0.5.0)
+    rake (0.9.2)
+    rspec (2.6.0)
+      rspec-core (~> 2.6.0)
+      rspec-expectations (~> 2.6.0)
+      rspec-mocks (~> 2.6.0)
+    rspec-core (2.6.4)
+    rspec-expectations (2.6.0)
+      diff-lcs (~> 1.1.2)
+    rspec-mocks (2.6.0)
+    ruby-debug-base19 (0.11.25)
+      columnize (>= 0.3.1)
+      linecache19 (>= 0.5.11)
+      ruby_core_source (>= 0.1.4)
+    ruby-debug19 (0.11.6)
+      columnize (>= 0.3.1)
+      linecache19 (>= 0.5.11)
+      ruby-debug-base19 (>= 0.11.19)
+    ruby-sdl-ffi (0.4)
+      nice-ffi (>= 0.2)
+    ruby_core_source (0.1.5)
+      archive-tar-minitar (>= 0.5.2)
+    rubygame (2.6.4)
+      rake (>= 0.7.0)
+      ruby-sdl-ffi (>= 0.1.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  active_support
+  dirge
+  rspec
+  ruby-debug19
+  rubygame
