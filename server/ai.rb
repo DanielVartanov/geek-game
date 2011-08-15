@@ -29,9 +29,12 @@ module GeekGame
       power = angle_diff.abs < 45.degrees ? angle_diff.abs / 90.degrees : 1
 
       case angle_diff.sign
-      when -1: motor!(1, 1 - power)
-      when 0: motor!(1, 1)
-      when 1: motor!(1 - power, 1)
+      when -1
+        motor!(1, 1 - power)
+      when 0
+        motor!(1, 1)
+      when 1
+        motor!(1 - power, 1)
       end
     end
 
