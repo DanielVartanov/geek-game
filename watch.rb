@@ -17,6 +17,7 @@ puts "This display can manage at least " + maximum_resolution.join("x")
 server_uri = "druby://localhost:1100"
 puts "Connecting to #{server_uri}"
 
+DRb.start_service
 game_objects = DRbObject.new nil, server_uri
 
 GeekGame::Client.new(game_objects).run
