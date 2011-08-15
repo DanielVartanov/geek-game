@@ -6,13 +6,13 @@ class Numeric
   def sign
     self.zero? ? 0 : self <=> 0.0
   end
+end
 
+class Float
   def ===(other)
     (self - other).abs <= Float::EPSILON * 1e3
   end
-end
 
-class Float  
   def zero?
     self === 0.0
   end
