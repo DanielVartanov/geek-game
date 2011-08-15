@@ -1,5 +1,3 @@
-require 'rubygems'
-require 'dirge'
 require 'active_support/core_ext/numeric/time'
 
 require ~'vendor/scopes-n-groups/lib/scope'
