@@ -13,9 +13,9 @@ module GeekGame
       @socket = TCPSocket.open host, port
       
       loop do
-        @clock.tick
-        
         handle_local_events
+        
+        @clock.tick
         
         fresh_data = @socket.gets
         update_with fresh_data
@@ -34,7 +34,7 @@ module GeekGame
       
       ids_to_create = [game_objects.keys - game_object_images.keys]
       ids_to_create.each do |id|
-        GameObjectImage.new game_objects[id]
+        GameObjectImage.create_from game_objects[id]
       end
 
       game_objects.each do |remote_object|
