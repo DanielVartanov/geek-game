@@ -3,15 +3,15 @@
 
 require "rubygame"
 require "dirge"
-require 'drb'
 
 require ~'init'
 require ~'server/init'
 
-game_server = GeekGame::Server.new
+timeline = GeekGame::Timeline.new
 
-DRb.start_service "druby://localhost:1100", GeekGame.game_objects
+network_thread = Thread.new do
+  network_server = GeekGame::NetworkServer.new timeline, 'localhost', 21000
+  network_server.start!
+end
 
-puts "=== Geek Game === Starting server at #{DRb.uri}"
-
-game_server.run
+timeline.start!

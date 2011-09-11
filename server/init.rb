@@ -1,4 +1,6 @@
 require 'dirge'
 
-require ~'server'
+require ~'timeline'
+require ~'network_server'
+
 require ~'ai'
