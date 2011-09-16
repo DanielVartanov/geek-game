@@ -1,8 +1,10 @@
+require "socket"
+
 module GeekGame
-  class NetworkServer
+  class NetworkServer < Struct.new(:timeline, :host, :port)
     def start!
-      server = TCPServer.new(game_server, 'localhost', 21000)
-      puts "Waiting for client"
+      server = TCPServer.new(host, port)
+      puts "GeekGame server is listening on #{host}:#{port}"
       client = server.accept
       loop do
         sleep(0.1)
