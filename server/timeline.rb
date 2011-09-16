@@ -6,6 +6,16 @@ module GeekGame
       setup_event_queue
       setup_clock
       setup_world
+
+      #temporarily here
+      
+      @red = Player.new :color => [0xff, 0, 0]
+      @red.factory = Factory.new :position => Point(-800, -400), :angle => 45.degrees
+      Recharger.new :position => @red.factory.position, :player => @red
+
+      @blue = Player.new :color => [0, 0, 0xff]
+      @blue.factory = Factory.new :position => Point(800, 400), :angle => -135.degrees
+      Recharger.new :position => @blue.factory.position, :player => @blue
       
       @ai = [AI.new(@red), AI.new(@blue)]
     end
@@ -29,7 +39,7 @@ module GeekGame
     end
 
     def update_game_world(seconds_passed)
-      @ai.each { |ai| ai.act!(seconds) } # TODO: to be wiped out to client (AI) side
+      @ai.each { |ai| ai.act!(seconds_passed) } # TODO: to be wiped out to client (AI) side
 
       @world.update(seconds_passed)
     end
@@ -47,7 +57,7 @@ module GeekGame
     protected
 
     def setup_event_queue
-      @event_queue = Rubygame::EventEvent_Queue.new
+      @event_queue = Rubygame::EventQueue.new
       @event_queue.enable_new_style_events
     end
 

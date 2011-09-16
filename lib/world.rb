@@ -1,13 +1,7 @@
 module GeekGame
   class World
     def initialize
-      @red = Player.new :color => [0xff, 0, 0]
-      @red.factory = Factory.new :position => Point(-800, -400), :angle => 45.degrees
-      Recharger.new :position => @red.factory.position, :player => @red
-
-      @blue = Player.new :color => [0, 0, 0xff]
-      @blue.factory = Factory.new :position => Point(800, 400), :angle => -135.degrees
-      Recharger.new :position => @blue.factory.position, :player => @blue
+      
     end
     
     def update(seconds_passed)
@@ -18,7 +12,7 @@ module GeekGame
     protected
 
     def update_game_objects(seconds_passed)
-      GeekGame.game_objects.update(seconds)
+      GeekGame.game_objects.update(seconds_passed)
     end
 
     def handle_collisions
