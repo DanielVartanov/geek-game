@@ -1,5 +1,4 @@
-__DIR__ = File.dirname(__FILE__)
-require File.join(__DIR__, 'spec_helper')
+require 'spec_helper'
 
 describe Point do
   describe "#==" do
@@ -59,6 +58,12 @@ describe Point do
       Point[1, 1].rotate_around(Point[0, 0], 90.degrees).should == Point[-1, 1]
       Point[1, 1].rotate_around(Point[0, 0], 270.degrees).should == Point[1, -1]
       Point[2, 2].rotate_around(Point[1, 1], 180.degrees).should == Point[0, 0]
+    end
+  end
+
+  describe "#to_array" do
+    it "should place coordinates in right order" do
+      Point[8, 512].to_array.should == [8, 512]
     end
   end
 end

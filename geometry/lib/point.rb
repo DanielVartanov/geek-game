@@ -24,6 +24,11 @@ class Point < Struct.new(:x, :y)
   def to_s
     "Point(#{x}, #{y})"
   end
+
+  def to_a
+    [x, y]
+  end
+  alias :to_array :to_a
 end
 
 def Point(x, y)
