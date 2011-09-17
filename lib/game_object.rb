@@ -1,5 +1,7 @@
+require "active_support/inflector"
+
 module GeekGame
-  class GameObject
+  class GameObject < Struct.new(:player, :position, :angle)
     attr_reader :birth_time
     
     def initialize
@@ -13,7 +15,17 @@ module GeekGame
 
     def life_time
       Time.now - birth_time
-    end    
+    end
+
+    def to_hash
+      {
+        :type => self.class.to_s.demodulize.underscore,
+        :position => position.to_array,
+        :angle => angle
+      }
+    end
+
+    alias :id :object_id
 
     protected
 

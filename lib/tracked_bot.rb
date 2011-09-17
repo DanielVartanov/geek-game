@@ -3,15 +3,14 @@ module GeekGame
   class TrackedBot < GameObject
     MAX_VELOCITY = 70
     AXIS_LENGTH = 40
-    SHELL_RELOAD_TIME = 2.seconds
+    SHELL_RELOAD_TIME = 2 #seconds
     MAX_HEALTH_POINTS = 1000
     MOVEMENT_COST = 0.025
     SHOOTING_COST = 0.1
 
-    # alias :gun :gun_proxy
+    # alias :gun :gun_proxy  # <---- пушка с точки зрения TrackedBot'а (угол поворота относительно корпуса и т.д.), класс у нее TracketBot::GunProxy, у других - NNN::GunProxy
     # protected attr_reader :actual_gun
 
-    attr_reader :position, :angle, :player
     attr_reader :left_track, :right_track
     attr_reader :gun
     attr_reader :shells
@@ -68,10 +67,11 @@ module GeekGame
     end
 
     def can_shoot?
-      # 
+      raise "not implemented yet"
     end
 
     def barrel_ending
+      raise "not implemented yet"
       # barrel_ending = self.position.advance_by(unit_vector * (GUN::LENGTH)) # gun.barrel_ending
     end
 

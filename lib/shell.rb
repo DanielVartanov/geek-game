@@ -4,8 +4,6 @@ module GeekGame
     MAX_RANGE = 400
     MAX_DAMAGE = 300
 
-    attr_reader :angle
-    attr_reader :position
     attr_reader :owner
 
     def initialize(params={})

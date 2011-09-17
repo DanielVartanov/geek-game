@@ -1,9 +1,5 @@
 module GeekGame
   class World
-    def initialize
-      
-    end
-    
     def update(seconds_passed)
       update_game_objects(seconds_passed)
       handle_collisions
