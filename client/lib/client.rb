@@ -1,0 +1,82 @@
+require "socket"
+
+module GeekGame
+  class Client < Struct.new(:server_host, :server_port)
+    def initialize(host, port)
+      super
+      setup_event_queue
+      setup_clock
+    end
+
+    def start!
+      connect_to_server
+      setup_network_client
+      setup_screen
+      setup_ttf
+      setup_scene
+
+      main_loop
+    end
+
+    protected
+
+    def main_loop
+      loop do
+        handle_local_events
+        @clock.tick
+
+=begin
+        if @socket.data?
+          fresh_data = @socket.gets
+          @scene.update_according_to fresh_data
+        end
+=end
+
+        fresh_data = @network_client.next_data_chunk
+        @scene.update_according_to fresh_data
+        @scene.draw
+      end
+    end
+
+    def connect_to_server
+      @socket = TCPSocket.open server_host, server_port
+    end
+
+    def setup_network_client
+      @network_client = Network::Client.new(@socket)
+    end
+
+    def handle_local_events
+      @event_queue.each do |event|
+        case event
+        when Rubygame::Events::QuitRequested
+          Rubygame.quit
+          exit
+        end
+      end
+    end
+
+    def setup_ttf
+      Rubygame::TTF.setup
+      point_size = 12
+      @font = Rubygame::TTF.new "/Library/Fonts/Courier New Bold.ttf", point_size
+    end
+
+    def setup_screen
+      @screen = Rubygame::Screen.new [1280, 800], 0, [Rubygame::HWSURFACE, Rubygame::DOUBLEBUF]
+      @screen.title = "GeekGame"
+    end
+
+    def setup_clock
+      @clock = Rubygame::Clock.new
+      @clock.target_framerate = 50
+      @clock.calibrate
+      @clock.enable_tick_events
+    end
+
+    def setup_event_queue
+      @event_queue = Rubygame::EventQueue.new
+      @event_queue.enable_new_style_events
+    end
+  end
+end
