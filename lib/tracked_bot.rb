@@ -87,7 +87,6 @@ module GeekGame
 
     protected
 
-    attr_writer :position, :angle, :player
     attr_writer :left_track, :right_track
     attr_writer :gun, :battery
     attr_accessor :last_shoot_time

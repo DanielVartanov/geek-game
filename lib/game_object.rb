@@ -19,6 +19,7 @@ module GeekGame
 
     def to_hash
       {
+        :id => id,
         :type => self.class.to_s.demodulize.underscore,
         :position => position.to_array,
         :angle => angle

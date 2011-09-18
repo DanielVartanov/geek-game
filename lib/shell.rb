@@ -43,8 +43,6 @@ module GeekGame
 
     protected
 
-    attr_writer :angle
-    attr_writer :position
     attr_writer :owner
     attr_accessor :initial_position
   end
