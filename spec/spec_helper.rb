@@ -1,4 +1,4 @@
 require "dirge"
-require ~"../init"
+require ~"../geek_game"
 
 include GeekGame

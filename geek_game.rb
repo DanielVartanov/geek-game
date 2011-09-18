@@ -1,3 +1,5 @@
+require "dirge"
+
 require ~'vendor/scopes-n-groups/lib/scope'
 
 require ~'geometry/init'
