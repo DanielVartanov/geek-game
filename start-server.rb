@@ -5,7 +5,7 @@ require "rubygame"
 require "dirge"
 
 require ~'geek_game'
-require ~'server/init'
+require ~'server/server'
 
 Thread.abort_on_exception = true
 
