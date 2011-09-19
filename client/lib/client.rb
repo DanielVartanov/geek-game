@@ -31,9 +31,8 @@ module GeekGame
           @scene.update_according_to fresh_data
         end
 =end
-
-        fresh_data = @network_client.current_world_state
-        @scene.update_according_to fresh_data
+        
+        @scene.update_according_to @network_client.current_world_state
         @scene.draw
       end
     end
@@ -65,6 +64,10 @@ module GeekGame
     def setup_screen
       @screen = Rubygame::Screen.new [1280, 800], 0, [Rubygame::HWSURFACE, Rubygame::DOUBLEBUF]
       @screen.title = "GeekGame"
+    end
+
+    def setup_scene
+      @scene = Scene.new(@screen, @font)
     end
 
     def setup_clock
