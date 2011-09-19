@@ -1,6 +1,19 @@
 module GeekGame
   module Network
     class Client < Struct.new(:socket)
+
+      #TODO: this method is a responsibility of an another class
+      def current_world_state
+        game_objects = next_data_chunk["game_objects"].map(&:symbolize_keys)
+        
+        {}.tap do |result|
+          game_objects.each do |game_object|
+            id = game_object.delete(:id)
+            result[id] = game_object
+          end
+        end
+      end
+      
       def next_data_chunk
         reset_buffer
         

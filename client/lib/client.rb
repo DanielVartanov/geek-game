@@ -32,7 +32,7 @@ module GeekGame
         end
 =end
 
-        fresh_data = @network_client.next_data_chunk
+        fresh_data = @network_client.current_world_state
         @scene.update_according_to fresh_data
         @scene.draw
       end
