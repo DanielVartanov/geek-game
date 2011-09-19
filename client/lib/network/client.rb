@@ -1,3 +1,6 @@
+require "bson"
+require "active_support/core_ext/hash/keys"
+
 module GeekGame
   module Network
     class Client < Struct.new(:socket)
