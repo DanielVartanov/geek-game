@@ -5,7 +5,7 @@ module GeekGame
     attr_reader :birth_time
     
     def initialize
-      GeekGame.game_objects << self
+      register!
       self.birth_time = Time.now
     end
 
@@ -31,5 +31,9 @@ module GeekGame
     protected
 
     attr_writer :birth_time
+
+    def register!
+      GeekGame.game_objects << self
+    end
   end  
 end
