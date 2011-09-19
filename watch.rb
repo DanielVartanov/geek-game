@@ -3,21 +3,12 @@
 
 require "rubygame"
 require "dirge"
-require 'drb'
 
-require ~'init'
+require ~'geek_game'
 require ~'geometry/init'
-require ~'vendor/scopes-n-groups/lib/scope'
-require ~'client/init'
-
+require ~'client/client'
 
 maximum_resolution = Rubygame::Screen.get_resolution
 puts "This display can manage at least " + maximum_resolution.join("x")
 
-server_uri = "druby://localhost:1100"
-puts "Connecting to #{server_uri}"
-
-DRb.start_service
-game_objects = DRbObject.new nil, server_uri
-
-GeekGame::Client.new(game_objects).run
+GeekGame::Client.new('localhost', 21000).start!
