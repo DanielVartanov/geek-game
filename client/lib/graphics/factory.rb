@@ -1,10 +1,6 @@
 module Graphics
   class Factory < Base
-    alias :factory :object
-
-    extend Forwardable
-
-    def_delegators :factory, :position, :angle, :player
+    alias :factory :game_object
 
     def draw
       radius = 25

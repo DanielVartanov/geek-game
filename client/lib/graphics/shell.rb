@@ -2,11 +2,7 @@ require 'forwardable'
 
 module Graphics
   class Shell < Base
-    alias :shell :object
-
-    extend Forwardable
-
-    def_delegators :shell, :position, :target_angle
+    alias :shell :game_object
 
     def draw
       draw_body

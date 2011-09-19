@@ -2,12 +2,7 @@ require 'forwardable'
 
 module Graphics
   class TrackedBot < Base
-    alias :tracked_bot :object
-
-    extend Forwardable
-
-    def_delegators :tracked_bot, :position, :angle, :track_axis, :left_track, :right_track,
-                   :left_track_position, :right_track_position, :gun_angle, :shells, :player
+    alias :tracked_bot :game_object
 
     def draw_track(center, size)
       side_length = size.to_f

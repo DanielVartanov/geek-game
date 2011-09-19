@@ -1,10 +1,6 @@
 module Graphics
   class Recharger < Base
-    alias :recharger :object
-
-    extend Forwardable
-
-    def_delegators :recharger, :position, :player
+    alias :recharger :game_object
 
     def draw
       surface.circle(position, GeekGame::Recharger::RANGE, player.color)
