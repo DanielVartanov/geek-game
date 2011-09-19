@@ -38,7 +38,7 @@ module Graphics
                  left_top.advance_by(Vector(length, -height)),
                  left_top.advance_by(Vector(0, -height))
                 ]
-      surface.rectangle(corners, player.color)
+      surface.rectangle(corners)
     end
 
     def draw_battery_charge

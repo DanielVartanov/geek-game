@@ -4,6 +4,7 @@ module GeekGame
 
     def initialize(*args)
       super
+      extend_screen
       self.game_object_images = {}
     end
     
@@ -35,8 +36,15 @@ module GeekGame
       screen.flip
     end
     
-    def default_color
-      [0xff, 0xff, 00]
+    def extend_screen
+      class << screen
+        include Shapes
+        include HUD
+
+        def default_color
+          [0xff, 0xff, 00]
+        end
+      end
     end
   end
 end

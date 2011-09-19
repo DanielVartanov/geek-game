@@ -1,6 +1,6 @@
 module Shapes
-  def draw_polygon_s( points, color )
-    _draw_polygon( points, color, true, true )
+  def draw_polygon_s(points, color)
+    _draw_polygon(points, color, true, true)
     return self
   end
 
