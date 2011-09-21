@@ -56,8 +56,15 @@ module Graphics
       surface.rectangle(corners, [128, 255, 128])
     end
 
-    def draw
+    def draw_axis
       surface.line(track_axis)
+    end
+
+    def draw
+      surface.square(position, 15)
+
+=begin      
+      draw_axis
 
       axis_vector = Vector(1, 0).rotate(angle)
 
@@ -72,6 +79,7 @@ module Graphics
       draw_health_bar
 
       draw_battery_charge
+=end
     end
   end
 end
