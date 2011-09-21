@@ -72,7 +72,7 @@ module GeekGame
 
     def setup_clock
       @clock = Rubygame::Clock.new
-      @clock.target_framerate = 50
+      @clock.target_framerate = 10
       @clock.calibrate
       @clock.enable_tick_events
     end
