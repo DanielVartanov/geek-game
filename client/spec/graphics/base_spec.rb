@@ -14,7 +14,7 @@ describe Graphics::Base do
 
     it { should be_instance_of(Graphics::TrackedBot) }
 
-    its(:position) { should == game_object[:position] }
+    its(:position) { should == Point(-28.894112991630443, -77.27638497287744) }
 
     its(:angle) { should == game_object[:angle] }
   end
