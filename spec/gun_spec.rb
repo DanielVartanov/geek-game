@@ -1,8 +1,10 @@
 require 'spec_helper'
 
 describe Gun do
+  let(:bot) { TrackedBot.new }
+  
   before do
-    @gun = Gun.new
+    @gun = bot.gun
   end
 
   it "should set angle to 90 at initialize" do
@@ -83,6 +85,16 @@ describe Gun do
         end
       end
     end
+  end
+
+  describe "#absolute_angle" do
+    let(:bot) { TrackedBot.new :angle => 45.degrees }
+    
+    let(:gun) { bot.gun }
+
+    subject { gun.absolute_angle }
+
+    it { should == bot.angle + gun.angle }
   end
 end
 

@@ -31,7 +31,7 @@ module GeekGame
 
       self.health_points = MAX_HEALTH_POINTS
       
-      self.gun = Gun.new initial_params[:gun_relative_angle] || 90.degrees
+      self.gun = Gun.new self, initial_params[:gun_relative_angle] || 90.degrees
 
       self.last_shoot_time = Time.now - SHELL_RELOAD_TIME
 
@@ -49,7 +49,7 @@ module GeekGame
     end
 
     def gun_angle
-      self.angle + self.gun.angle
+      gun.absolute_angle
     end
 
     def motor!(target_left_track_power, target_right_track_power)

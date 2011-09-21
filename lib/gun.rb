@@ -1,8 +1,11 @@
 module GeekGame
   class Gun
     #alias :relative_angle :angle
+
+    attr_reader :bot
     
-    def initialize(initial_angle = 90.degrees)
+    def initialize(bot, initial_angle = 90.degrees)
+      self.bot = bot
       self.current_vector = Vector(1, 0).rotate(initial_angle)
       self.target_vector = self.current_vector
     end
@@ -28,6 +31,10 @@ module GeekGame
     def angle
       Vector(1,0).signed_angle_with(self.vector)
     end
+
+    def absolute_angle
+      bot.angle + self.angle
+    end
     
     protected
 
@@ -35,5 +42,7 @@ module GeekGame
 
     attr_accessor :current_vector
     attr_accessor :target_vector
+
+    attr_writer :bot
   end
 end
