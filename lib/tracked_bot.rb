@@ -22,8 +22,8 @@ module GeekGame
     end
 
     def initialize(initial_params = {})
-      self.left_track = Track.new
-      self.right_track = Track.new
+      self.left_track = LeftTrack.new(self)
+      self.right_track = RightTrack.new(self)
 
       self.position = initial_params[:position] || Point(0, 0)
       self.angle = initial_params[:angle] || 0
@@ -90,19 +90,17 @@ module GeekGame
         base_hash[:health_points] = health_points
         base_hash[:battery] = battery.to_hash
         base_hash[:gun] = gun.to_hash
-        
-        base_hash[:left_track] = left_track.to_hash.merge(:position => left_track_position)
-        base_hash[:right_track] = right_track.to_hash.merge(:position => right_track_position)
+        base_hash[:left_track] = left_track.to_hash
+        base_hash[:right_track] = right_track.to_hash
       end
     end
 
     def left_track_position
-      right_track_position.rotate_around(position, 180.degrees)
+      left_track.position
     end
 
     def right_track_position
-      axis_unit_vector = Vector(1, 0).rotate(angle)
-      position.advance_by(axis_unit_vector * (AXIS_LENGTH / 2))
+      right_track.position
     end
     
     protected

@@ -2,10 +2,11 @@ module GeekGame
   class Track
     TRACK_POWER_ACCELERATION = 0.7
 
-    attr_reader :power
+    attr_reader :power, :bot
     attr_accessor :target_power
 
-    def initialize
+    def initialize(bot)
+      self.bot = bot
       self.power = 0
       self.target_power = 0
     end
@@ -23,11 +24,11 @@ module GeekGame
     end
 
     def to_hash
-      { :power => power }
+      { :power => power, :position => position }
     end
 
     protected
 
-    attr_writer :power
+    attr_writer :power, :bot
   end
 end

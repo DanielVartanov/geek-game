@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Track do
   before :each do
     @bot = TrackedBot.new
-    @track = Track.new
+    @track = @bot.left_track
   end
 
   it "should set power to 0 at initialize" do
@@ -210,15 +210,8 @@ describe Track do
     end
 
     it "should contain tracks" do
-      subject[:left_track].should == {
-        :power => bot.left_track.power,
-        :position => bot.left_track_position
-      }
-      
-      subject[:right_track].should == {
-        :power => bot.right_track.power,
-        :position => bot.right_track_position
-      }
+      subject[:left_track].should == bot.left_track.to_hash
+      subject[:right_track].should == bot.right_track.to_hash
     end
   end
 end

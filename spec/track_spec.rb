@@ -7,6 +7,6 @@ describe Track do
   describe "#to_hash" do
     subject { track.to_hash }
 
-    it { should == { :power => track.power } }
+    it { should == { :power => track.power, :position => track.position } }
   end
 end
