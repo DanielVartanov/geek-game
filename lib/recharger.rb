@@ -1,6 +1,6 @@
 module GeekGame
   class Recharger < GameObject
-    RANGE = 900
+    RANGE = 450
     CHARGE_RATE = 0.1
 
     attr_reader :position, :player
