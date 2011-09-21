@@ -1,10 +1,10 @@
 module Shapes
-  def draw_polygon_s(points, color)
+  def draw_polygon_s(points, color=default_color)
     _draw_polygon(points, color, true, true)
     return self
   end
 
-  def circle(center, radius, color)
+  def circle(center, radius, color=default_color)
     draw_circle_a(center.to_screen(self), radius, color)
   end
   
