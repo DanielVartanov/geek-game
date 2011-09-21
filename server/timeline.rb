@@ -6,6 +6,7 @@ module GeekGame
       setup_event_queue
       setup_clock
       setup_world
+      setup_network_server
 
       #temporarily here
       
@@ -24,7 +25,10 @@ module GeekGame
       loop do
         handle_system_events
         seconds_passed = @clock.tick.seconds
+        puts "#{seconds_passed} passed"
         gradually_update(seconds_passed)
+
+        @network_server.push
       end
     end
 
@@ -55,6 +59,14 @@ module GeekGame
     end
 
     protected
+
+    def setup_network_server
+      @network_server = GeekGame::Network::Server.new self, 'localhost', 21000
+      @network_server.bind_to_port
+      print "Waiting for client..."
+      @network_server.wait_for_client
+      puts " client connected"
+    end
 
     def setup_event_queue
       @event_queue = Rubygame::EventQueue.new

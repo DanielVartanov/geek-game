@@ -4,13 +4,7 @@ require "bson"
 module GeekGame
   module Network
     class Server < Struct.new(:timeline, :host, :port)
-      def start!
-        bind_to_port
-        puts "GeekGame server is listening on #{host}:#{port}"
-        
-        main_loop
-      end
-      
+      attr_accessor :socket
 =begin      
          loop do
           Thread.start(server.accept) do |client|
@@ -22,26 +16,21 @@ module GeekGame
         end
 =end
 
-      protected
-
-      attr_accessor :socket
-
       def bind_to_port
         self.socket = TCPServer.new(host, port)
       end
+      
+      def wait_for_client
+        @client = socket.accept
+      end
+      
+      def push
+        objects_hash = GeekGame.game_objects.to_hashes
+        data_to_transmit = BSON.serialize(objects_hash).to_s
+        print " pushing [#{data_to_transmit.size} bytes]..."
 
-      def main_loop
-        client = socket.accept
-        puts "Client connected"
-
-        loop do
-          sleep(0.1) # do not convert to Rubygame::clock or whatever takes CPU quants
-          objects_hash = GeekGame.game_objects.to_hashes
-          data_to_transmit = BSON.serialize(objects_hash).to_s
-          client.puts data_to_transmit
-          
-          # TODO: add #put_byte_array to ruby sockets
-        end
+        @client.print data_to_transmit
+        puts " done"
       end
     end
   end
