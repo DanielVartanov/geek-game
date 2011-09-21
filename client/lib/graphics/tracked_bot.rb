@@ -16,7 +16,7 @@ module Graphics
     end
 
     def draw_gun
-      barrel_end = position.advance_by(Vector(1, 0).rotate(gun_angle) * (GeekGame::TrackedBot::AXIS_LENGTH / 2))
+      barrel_end = position.advance_by(Vector(1, 0).rotate(gun["angle"]) * (GeekGame::TrackedBot::AXIS_LENGTH / 2))
       surface.line(Line(position, barrel_end), [0, 0xff, 0])
     end
 
@@ -28,7 +28,7 @@ module Graphics
 
     def draw_health_bar
       full_length = GeekGame::TrackedBot::AXIS_LENGTH
-      length = full_length * tracked_bot.health_points.to_f / GeekGame::TrackedBot::MAX_HEALTH_POINTS
+      length = full_length * health_points.to_f / GeekGame::TrackedBot::MAX_HEALTH_POINTS
       height = 3
 
       left_top = position.advance_by(Vector(-full_length.to_f / 2, full_length.to_f / 2 + 15))
@@ -43,7 +43,7 @@ module Graphics
 
     def draw_battery_charge
       full_length = GeekGame::TrackedBot::AXIS_LENGTH * 0.75
-      actual_length = full_length * tracked_bot.battery.charge
+      actual_length = full_length * battery["charge"]
       width = 3
 
       left_bottom = position.advance_by(Vector(-GeekGame::TrackedBot::AXIS_LENGTH / 2 - 10, -20))
@@ -56,30 +56,44 @@ module Graphics
       surface.rectangle(corners, [128, 255, 128])
     end
 
+    def left_track_position
+      Point(*left_track["position"])
+    end
+
+    def right_track_position
+      Point(*right_track["position"])
+    end
+
+    def left_track_power
+      left_track["power"]
+    end
+
+    def right_track_power
+      right_track["power"]
+    end
+
+    def track_axis
+      Line left_track_position, right_track_position
+    end
+    
     def draw_axis
-      surface.line(track_axis)
+      surface.line track_axis
     end
 
     def draw
-      surface.square(position, 15)
-
-=begin      
       draw_axis
 
       axis_vector = Vector(1, 0).rotate(angle)
 
       draw_triangle(position.advance_by(axis_vector * (GeekGame::TrackedBot::AXIS_LENGTH / 4)))
       draw_triangle(position.advance_by(axis_vector * (GeekGame::TrackedBot::AXIS_LENGTH / 4 * (-1))))
-            
-      draw_track(left_track_position, 8 * left_track.power)
-      draw_track(right_track_position, 8 * right_track.power)
+
+      draw_track(left_track_position, 8 * left_track_power)
+      draw_track(right_track_position, 8 * right_track_power)
 
       draw_gun
-
       draw_health_bar
-
       draw_battery_charge
-=end
     end
   end
 end

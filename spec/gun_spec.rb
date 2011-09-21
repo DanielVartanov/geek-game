@@ -103,7 +103,7 @@ describe Gun do
 
     subject { gun.to_hash }
 
-    it { should == { :angle => gun.angle } }
+    it { should == { :angle => gun.absolute_angle } }
   end
 end
 

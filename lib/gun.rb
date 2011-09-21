@@ -37,7 +37,7 @@ module GeekGame
     end
     
     def to_hash
-      { :angle => angle }
+      { :angle => absolute_angle }
     end
     
     protected
