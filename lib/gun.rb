@@ -1,8 +1,8 @@
+# -*- coding: utf-8 -*-
 module GeekGame
   class Gun
-    #alias :relative_angle :angle
-
     attr_reader :bot
+    #alias :relative_angle :angle # да кому и когда нужен этот relative angle?!
     
     def initialize(bot, initial_angle = 90.degrees)
       self.bot = bot
@@ -34,6 +34,10 @@ module GeekGame
 
     def absolute_angle
       bot.angle + self.angle
+    end
+    
+    def to_hash
+      { :angle => angle }
     end
     
     protected

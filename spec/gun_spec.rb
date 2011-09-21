@@ -96,5 +96,14 @@ describe Gun do
 
     it { should == bot.angle + gun.angle }
   end
+  
+  describe "#to_hash" do
+    let(:bot) { TrackedBot.new }
+    let(:gun) { bot.gun }
+
+    subject { gun.to_hash }
+
+    it { should == { :angle => gun.angle } }
+  end
 end
 

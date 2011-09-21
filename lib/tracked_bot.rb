@@ -3,10 +3,10 @@ module GeekGame
   class TrackedBot < GameObject
     MAX_VELOCITY = 70
     AXIS_LENGTH = 40
-    SHELL_RELOAD_TIME = 2 #seconds
+    SHELL_RELOAD_TIME = 0.3 #seconds
     MAX_HEALTH_POINTS = 1000
     MOVEMENT_COST = 0.025
-    SHOOTING_COST = 0.1
+    SHOOTING_COST = 0.001
 
     # alias :gun :gun_proxy  # <---- пушка с точки зрения TrackedBot'а (угол поворота относительно корпуса и т.д.), класс у нее TracketBot::GunProxy, у других - NNN::GunProxy
     # protected attr_reader :actual_gun
@@ -85,6 +85,26 @@ module GeekGame
       self.last_shoot_time = Time.now
     end
 
+    def to_hash
+      super.tap do |base_hash|
+        base_hash[:health_points] = health_points
+        base_hash[:battery] = battery.to_hash
+        base_hash[:gun] = gun.to_hash
+        
+        base_hash[:left_track] = left_track.to_hash.merge(:position => left_track_position)
+        base_hash[:right_track] = right_track.to_hash.merge(:position => right_track_position)
+      end
+    end
+
+    def left_track_position
+      right_track_position.rotate_around(position, 180.degrees)
+    end
+
+    def right_track_position
+      axis_unit_vector = Vector(1, 0).rotate(angle)
+      position.advance_by(axis_unit_vector * (AXIS_LENGTH / 2))
+    end
+    
     protected
 
     attr_writer :left_track, :right_track
@@ -124,14 +144,5 @@ module GeekGame
         self.position = position.rotate_around(intersection_point, angle_diff)
       end
     end
-
-    def left_track_position
-      right_track_position.rotate_around(position, 180.degrees)
-    end
-
-    def right_track_position
-      axis_unit_vector = Vector(1, 0).rotate(angle)
-      position.advance_by(axis_unit_vector * (AXIS_LENGTH / 2))
-    end  
   end
 end

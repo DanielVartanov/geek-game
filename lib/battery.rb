@@ -18,6 +18,10 @@ module GeekGame
       self.charge = 1 if self.charge > 1
     end
 
+    def to_hash
+      { :charge => charge }
+    end
+
     protected
 
     attr_writer :charge

@@ -15,10 +15,8 @@ describe GameObject, "#to_hash" do
       subject[:type].should == "tracked_bot"
     end
 
-    it "should contain a unique id" do
+    it "should contain a unique id of the object" do
       subject[:id].should == tracked_bot.id
     end
-
-    it "should contain all children" # :player => [:factory, :bot => [:angle, :track]
   end
 end

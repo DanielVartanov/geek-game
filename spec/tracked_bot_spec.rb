@@ -162,7 +162,7 @@ describe Track do
   end
 
   describe "#take_damage" do
-    describe "given damage value is less than the current health points" do
+    context "given damage value is less than the current health points" do
       before do
         @initial_health_points = TrackedBot::MAX_HEALTH_POINTS
         @damage_value = @initial_health_points/2
@@ -174,7 +174,7 @@ describe Track do
       end
     end
 
-    describe "given damage value is greater than the current health points" do
+    context "given damage value is greater than the current health points" do
       before do
         @damage_value = TrackedBot::MAX_HEALTH_POINTS * 1.5
         @bot.take_damage @damage_value
@@ -183,6 +183,42 @@ describe Track do
       it "should set health points to 0" do
         @bot.health_points.should === 0
       end
+    end
+  end
+
+  describe "#to_hash" do
+    let(:bot) { TrackedBot.new }
+
+    subject { bot.to_hash }
+
+    it "should contain common properties derived from Base" do
+      [:angle, :position, :type, :id].each do |key|
+        subject.key?(key).should be_true
+      end
+    end
+
+    it "should contain all specific properties" do
+      subject[:health_points].should == bot.health_points
+    end
+
+    it "should contain battery" do
+      subject[:battery].should == bot.battery.to_hash
+    end
+
+    it "should contain gun" do
+      subject[:gun].should == bot.gun.to_hash
+    end
+
+    it "should contain tracks" do
+      subject[:left_track].should == {
+        :power => bot.left_track.power,
+        :position => bot.left_track_position
+      }
+      
+      subject[:right_track].should == {
+        :power => bot.right_track.power,
+        :position => bot.right_track_position
+      }
     end
   end
 end

@@ -22,6 +22,10 @@ module GeekGame
       end    
     end
 
+    def to_hash
+      { :power => power }
+    end
+
     protected
 
     attr_writer :power
