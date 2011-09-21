@@ -24,7 +24,7 @@ module GeekGame
     end
 
     def to_hash
-      { :power => power, :position => position }
+      { :power => power, :position => position.to_array }
     end
 
     protected
