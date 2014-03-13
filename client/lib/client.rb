@@ -31,7 +31,7 @@ module GeekGame
           @scene.update_according_to fresh_data
         end
 =end
-        
+
         @scene.update_according_to @network_client.current_world_state
         @scene.draw
       end
@@ -58,7 +58,7 @@ module GeekGame
     def setup_ttf
       Rubygame::TTF.setup
       point_size = 12
-      @font = Rubygame::TTF.new "/Library/Fonts/Courier New Bold.ttf", point_size
+      @font = Rubygame::TTF.new "/usr/share/fonts/truetype/msttcorefonts/Courier_New_Bold.ttf", point_size
     end
 
     def setup_screen
