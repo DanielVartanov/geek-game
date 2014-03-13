@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 require "rubygame"
-require "dirge"
 
 require_relative 'geek_game'
 require_relative 'server/server'

@@ -1,5 +1,3 @@
-require "dirge"
-
 require_relative 'vendor/scopes-n-groups/lib/scope'
 
 require_relative 'geometry/init'
