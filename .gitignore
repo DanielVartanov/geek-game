@@ -4,3 +4,4 @@ eproject.cfg
 *_flymake*
 \#*#
 \.#*
+/.bundle/config
