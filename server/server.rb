@@ -1,6 +1,6 @@
 require 'dirge'
 
-require ~'timeline'
-require ~'network/server'
+require_relative 'timeline'
+require_relative 'network/server'
 
-require ~'ai'
+require_relative 'ai'

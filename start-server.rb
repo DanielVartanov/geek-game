@@ -4,8 +4,8 @@
 require "rubygame"
 require "dirge"
 
-require ~'geek_game'
-require ~'server/server'
+require_relative 'geek_game'
+require_relative 'server/server'
 
 timeline = GeekGame::Timeline.new
 timeline.start!

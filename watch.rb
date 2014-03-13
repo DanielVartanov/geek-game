@@ -4,9 +4,9 @@
 require "rubygame"
 require "dirge"
 
-require ~'geek_game'
-require ~'geometry/init'
-require ~'client/client'
+require_relative 'geek_game'
+require_relative 'geometry/init'
+require_relative 'client/client'
 
 maximum_resolution = Rubygame::Screen.get_resolution
 puts "This display can manage at least " + maximum_resolution.join("x")

@@ -1,7 +1,6 @@
-source :rubygems
+source 'https://rubygems.org'
 
 gem "rubygame"
-gem "dirge"
 gem "active_support"
 gem "bson"
 

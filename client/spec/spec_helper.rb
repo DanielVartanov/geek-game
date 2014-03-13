@@ -5,6 +5,6 @@ require "client/client.rb"
 require "dirge"
 require "bson"
 
-require ~"stubs/socket_stub"
+require_relative "stubs/socket_stub"
 
 include GeekGame

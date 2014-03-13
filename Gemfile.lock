@@ -1,17 +1,13 @@
 GEM
-  remote: http://rubygems.org/
+  remote: https://rubygems.org/
   specs:
     active_support (3.0.0)
       activesupport (= 3.0.0)
     activesupport (3.0.0)
     archive-tar-minitar (0.5.2)
     bson (1.3.1)
-    callsite (0.0.5)
-      bundler (~> 1.0.0)
     columnize (0.3.4)
     diff-lcs (1.1.3)
-    dirge (0.0.5)
-      callsite (>= 0.0.2)
     ffi (1.0.9)
     linecache19 (0.5.12)
       ruby_core_source (>= 0.1.4)
@@ -48,7 +44,6 @@ PLATFORMS
 DEPENDENCIES
   active_support
   bson
-  dirge
   rspec
   ruby-debug19
   rubygame

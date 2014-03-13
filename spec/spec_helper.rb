@@ -1,4 +1,4 @@
 require "dirge"
-require ~"../geek_game"
+require_relative "../geek_game"
 
 include GeekGame
