@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 gem "rubygame"
-gem "active_support"
+gem "activesupport"
 gem "bson"
 
 group :test do
