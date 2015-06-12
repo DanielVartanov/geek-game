@@ -14,13 +14,11 @@ module GeekGame
     def update_power(seconds)
       power_diff = target_power - power
 
-      # self.power = [upper_bound, TRACK_POWER_ACCELERATION * seconds * power_diff.sign].min
-
       if power_diff.abs < TRACK_POWER_ACCELERATION * seconds
         self.power = target_power
       else
         self.power += TRACK_POWER_ACCELERATION * seconds * power_diff.sign
-      end    
+      end
     end
 
     def to_hash
