@@ -1,11 +1,11 @@
 module GeekGame
   module TrackedBotExtensions
     attr_accessor :threshold
-    
+
     def vector_to(target)
       Vector.by_end_points(self.position, target.position)
     end
-    
+
     def angle_to(target)
       Vector(1, 0).signed_angle_with(vector_to(target))
     end
@@ -74,7 +74,7 @@ module GeekGame
 
   class AI
     attr_accessor :player
-    
+
     def initialize(player)
       self.player = player
     end
@@ -89,7 +89,7 @@ module GeekGame
 
     def act!(seconds)
       player.factory.produce!
-      dangerous_bots = enemy_bots.reject { |bot| bot.battery.charge < TrackedBot::SHOOTING_COST }
+      dangerous_bots = enemy_bots.reject { |bot| bot.battery.charge < bot.shooting_cost }
       target = dangerous_bots.sort { |left, right| left.health_points <=> right.health_points }.first
       return if target.nil?
       my_bots.each do |bot|

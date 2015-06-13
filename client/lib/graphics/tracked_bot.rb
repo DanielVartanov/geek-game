@@ -16,7 +16,7 @@ module Graphics
     end
 
     def draw_gun
-      barrel_end = position.advance_by(Vector(1, 0).rotate(gun["angle"]) * (GeekGame::TrackedBot::AXIS_LENGTH / 2))
+      barrel_end = position.advance_by(Vector(1, 0).rotate(gun["angle"]) * (GeekGame::TrackedBot.axis_length / 2))
       surface.line(Line(position, barrel_end), [0, 0xff, 0])
     end
 
@@ -27,12 +27,12 @@ module Graphics
     end
 
     def draw_health_bar
-      full_length = GeekGame::TrackedBot::AXIS_LENGTH
-      length = full_length * health_points.to_f / GeekGame::TrackedBot::MAX_HEALTH_POINTS
+      full_length = GeekGame::TrackedBot.axis_length
+      length = full_length * health_points.to_f / GeekGame::TrackedBot.max_health_points
       height = 3
 
       left_top = position.advance_by(Vector(-full_length.to_f / 2, full_length.to_f / 2 + 15))
-      
+
       corners = [left_top,
                  left_top.advance_by(Vector(length, 0)),
                  left_top.advance_by(Vector(length, -height)),
@@ -42,11 +42,11 @@ module Graphics
     end
 
     def draw_battery_charge
-      full_length = GeekGame::TrackedBot::AXIS_LENGTH * 0.75
+      full_length = GeekGame::TrackedBot.axis_length * 0.75
       actual_length = full_length * battery["charge"]
       width = 3
 
-      left_bottom = position.advance_by(Vector(-GeekGame::TrackedBot::AXIS_LENGTH / 2 - 10, -20))
+      left_bottom = position.advance_by(Vector(-GeekGame::TrackedBot.axis_length / 2 - 10, -20))
 
       corners = [left_bottom,
                  left_bottom.advance_by(Vector(0, actual_length)),
@@ -75,7 +75,7 @@ module Graphics
     def track_axis
       Line left_track_position, right_track_position
     end
-    
+
     def draw_axis
       surface.line track_axis
     end
@@ -85,8 +85,8 @@ module Graphics
 
       axis_vector = Vector(1, 0).rotate(angle)
 
-      draw_triangle(position.advance_by(axis_vector * (GeekGame::TrackedBot::AXIS_LENGTH / 4)))
-      draw_triangle(position.advance_by(axis_vector * (GeekGame::TrackedBot::AXIS_LENGTH / 4 * (-1))))
+      draw_triangle(position.advance_by(axis_vector * (GeekGame::TrackedBot.axis_length / 4)))
+      draw_triangle(position.advance_by(axis_vector * (GeekGame::TrackedBot.axis_length / 4 * (-1))))
 
       draw_track(left_track_position, 8 * left_track_power)
       draw_track(right_track_position, 8 * right_track_power)

@@ -1,7 +1,9 @@
 module GeekGame
   class Factory < GameObject
-    PRODUCTION_TIME = 5
-    
+    define_properties :production_time
+
+    factory_properties production_time: 5.0
+
     attr_reader :position, :angle, :player, :production_start_time
     attr_accessor :player
 
@@ -12,7 +14,7 @@ module GeekGame
       self.producing = false
 
       super()
-    end    
+    end
 
     def produce!
       return if producing?
@@ -25,7 +27,7 @@ module GeekGame
       if producing? and production_time_passed?
         create_bot
         self.producing = false
-      end      
+      end
     end
 
     def orientation
@@ -37,21 +39,21 @@ module GeekGame
     end
 
     def progress
-      (Time.now - production_start_time) / PRODUCTION_TIME
+      (Time.now - production_start_time) / production_time
     end
 
     def production_time_passed?
-      Time.now - production_start_time > PRODUCTION_TIME
+      Time.now - production_start_time > production_time
     end
-    
+
     protected
 
     def create_bot
-      TrackedBot.new :position => position.advance_by(orientation * 25),
-        :angle => angle - 90.degrees,
-        :player => player
+      TrackedBot.new position: position.advance_by(orientation * 25),
+        angle: angle - 90.degrees,
+        player: player
     end
-    
+
     attr_writer  :position, :angle, :production_start_time
     attr_accessor :producing
   end

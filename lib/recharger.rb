@@ -1,7 +1,8 @@
 module GeekGame
   class Recharger < GameObject
-    RANGE = 450
-    CHARGE_RATE = 0.1
+    define_properties :range, :charge_rate
+
+    recharger_properties range: 450.0, charge_rate: 0.1
 
     attr_reader :position, :player
 
@@ -18,8 +19,8 @@ module GeekGame
 
     def update(seconds)
       GeekGame.game_objects.bots.each do |bot|
-        if bot.player == player and distance_to(bot) < RANGE
-          bot.battery.charge_by(CHARGE_RATE * seconds)
+        if bot.player == player and distance_to(bot) < range
+          bot.battery.charge_by(charge_rate * seconds)
         end
       end
     end

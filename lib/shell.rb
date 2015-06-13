@@ -38,7 +38,7 @@ module GeekGame
     end
 
     def hit?(bot)
-      position.distance_to(bot.position) <= TrackedBot::AXIS_LENGTH.to_f / 2
+      position.distance_to(bot.position) <= bot.axis_length.to_f / 2
     end
 
     protected
