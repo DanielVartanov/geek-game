@@ -1,7 +1,5 @@
 module GeekGame
   module TrackedBotExtensions
-    attr_accessor :threshold
-
     def vector_to(target)
       Vector.by_end_points(self.position, target.position)
     end
@@ -91,19 +89,16 @@ module GeekGame
 
     def act!(seconds)
       player.factory.produce!
+
       dangerous_bots = enemy_bots.reject { |bot| bot.battery.charge < bot.shooting_cost }
-      target = dangerous_bots.sort { |left, right| left.health_points <=> right.health_points }.first
-      return if target.nil?
       my_bots.each do |bot|
-        if bot.stopped?
-          bot.turn_aside
-          bot.threshold = 0.2 + rand * 0.8
-        end
-        bot.motor!(1, 1) if bot.life_time > bot.threshold and bot.life_time < bot.threshold * 12
-        bot.engage(target) if bot.life_time > bot.threshold * 12
+        target = dangerous_bots.sort { |left, right| bot.distance_to(left) <=> bot.distance_to(right) }.first
+        return if target.nil?
+
         if bot.battery.charge < 0.2
           bot.engage(player.factory)
         else
+          bot.engage(target)
           bot.shoot(target)
         end
       end
