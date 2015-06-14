@@ -90,9 +90,8 @@ module GeekGame
     def act!(seconds)
       player.factory.produce!
 
-      dangerous_bots = enemy_bots.reject { |bot| bot.battery.charge < bot.shooting_cost }
-      my_bots.each do |bot|
-        target = dangerous_bots.sort { |left, right| bot.distance_to(left) <=> bot.distance_to(right) }.first
+      my_bots.select { |bot| bot.is_a?(PewPew) }.each do |bot|
+        target = enemy_bots.sort { |left, right| bot.distance_to(left) <=> bot.distance_to(right) }.first
         return if target.nil?
 
         if bot.battery.charge < 0.2

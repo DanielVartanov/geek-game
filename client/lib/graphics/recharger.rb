@@ -3,7 +3,7 @@ module Graphics
     alias :recharger :game_object
 
     def draw
-      surface.circle(position, GeekGame::Recharger.range)
+      surface.circle(position, GeekGame::Recharger.range, player_color)
     end
   end
 end

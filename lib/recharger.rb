@@ -2,7 +2,7 @@ module GeekGame
   class Recharger < GameObject
     define_properties :range, :charge_rate
 
-    recharger_properties range: 450.0, charge_rate: 0.1
+    recharger_properties range: 300.0, charge_rate: 0.1
 
     attr_reader :position, :player
 

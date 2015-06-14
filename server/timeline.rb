@@ -8,17 +8,25 @@ module GeekGame
       setup_world
       setup_network_server
 
-      #temporarily here
-      
-      @red = Player.new :color => [0xff, 0, 0]
+      # This is temporarily here
+      @red = Player.new color: [0xff, 0, 0]
       @red.factory = Factory.new :position => Point(-400, -200), :angle => 45.degrees
-      Recharger.new :position => @red.factory.position, :player => @red
+      build_initial_facilities_for @red
 
-      @blue = Player.new :color => [0, 0, 0xff]
+      @blue = Player.new color: [0, 0, 0xff]
       @blue.factory = Factory.new :position => Point(400, 200), :angle => -135.degrees
-      Recharger.new :position => @blue.factory.position, :player => @blue
-      
+      build_initial_facilities_for @blue
+
       @ai = [AI.new(@red), AI.new(@blue)]
+    end
+
+    def build_initial_facilities_for(player)
+      Recharger.new position: player.factory.position, player: player
+
+      3.times do
+        random_position = player.factory.position.advance_by(Vector.polar(1, rand(360).degrees) * rand(300))
+        Engineer.new position: random_position, angle: rand(360).degrees, player: player
+      end
     end
 
     def start!
@@ -34,7 +42,7 @@ module GeekGame
 
     def gradually_update(seconds_passed)
       time_step = 1e-1
-      
+
       (seconds_passed.to_f / time_step).to_i.times do
         update_game_world(time_step)
       end
