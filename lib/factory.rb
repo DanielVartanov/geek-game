@@ -2,7 +2,7 @@ module GeekGame
   class Factory < GameObject
     define_properties :production_time
 
-    factory_properties production_time: 5.0
+    factory_properties production_time: 1.0
 
     attr_reader :position, :angle, :player, :production_start_time
     attr_accessor :player
@@ -49,7 +49,7 @@ module GeekGame
     protected
 
     def create_bot
-      TrackedBot.new position: position.advance_by(orientation * 25),
+      PewPew.new position: position.advance_by(orientation * 25),
         angle: angle - 90.degrees,
         player: player
     end

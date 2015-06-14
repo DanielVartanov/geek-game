@@ -31,7 +31,7 @@ describe Shell do
       before do
         @shell.update(0.1)
       end
-      
+
       it { should be_false }
     end
 
@@ -45,13 +45,13 @@ describe Shell do
   end
 
   describe "#hit?" do
-    before { @bot = TrackedBot.new :position => Point(0, 0) }
+    before { @bot = PewPew.new :position => Point(0, 0) }
 
     subject { @shell.hit?(@bot) }
 
     context "when shell is within track axis diameter" do
       before { @shell = Shell.new :position => Point(10, 10) }
-      
+
       it { should be_true }
     end
 
@@ -62,7 +62,7 @@ describe Shell do
     end
 
     context "when shell is right at the bound of bot" do
-      before { @shell = Shell.new :position => Point(0, TrackedBot::AXIS_LENGTH.to_f / 2) }
+      before { @shell = Shell.new :position => Point(0, PewPew.axis_length.to_f / 2) }
 
       it { should be_true }
     end

@@ -4,7 +4,7 @@ describe Graphics::Base do
   describe ".create_from" do
     let(:game_object) do
       {
-        :type => "tracked_bot",
+        :type => "pew_pew",
         :position => [-28.894112991630443, -77.27638497287744],
         :angle => -6.424728038547264
       }
@@ -12,7 +12,7 @@ describe Graphics::Base do
 
     subject { Graphics::Base.create_from game_object, {} }
 
-    it { should be_instance_of(Graphics::TrackedBot) }
+    it { should be_instance_of(Graphics::PewPew) }
 
     its(:position) { should == Point(-28.894112991630443, -77.27638497287744) }
 

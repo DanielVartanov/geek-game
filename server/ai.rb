@@ -18,14 +18,8 @@ module GeekGame
       motor!(0, 0)
     end
 
-    def aim(target)
-      angle_diff = angle_to(target) - gun_angle
-      gun.rotate(angle_diff)
-    end
-
     def advance_to(target)
-      movement_vector = Vector(1, 0).rotate(angle).rotate(90.degrees)
-      angle_diff = movement_vector.signed_angle_with(vector_to(target))
+      angle_diff = normalized_movement_vector.signed_angle_with(vector_to(target))
       power = angle_diff.abs < 45.degrees ? angle_diff.abs / 90.degrees : 1
 
       case angle_diff.sign
@@ -38,19 +32,6 @@ module GeekGame
       end
     end
 
-    def close_enough_to_shoot(target)
-      distance_to(target) < Shell::MAX_RANGE
-    end
-
-    def worth_fire?(target)
-      angle_to(target) - gun_angle < 10.degrees and close_enough_to_shoot(target)
-    end
-
-    def engage(target)
-      advance_to(target)
-      stop! if distance_to(target) < 300
-    end
-
     def turn_aside
       direction = (rand * 2 - 1).sign
       if direction > 0
@@ -60,17 +41,38 @@ module GeekGame
       end
     end
 
-    def shoot(target)
-      aim(target)
-      fire! if worth_fire?(target)
-    end
-
     def stopped?
       left_track.power.zero? and right_track.power.zero?
     end
   end
 
+  module PewPewExtentions
+    def aim(target)
+      angle_diff = angle_to(target) - gun.absolute_angle
+      gun.rotate(angle_diff)
+    end
+
+    def close_enough_to_shoot(target)
+      distance_to(target) < Shell::MAX_RANGE
+    end
+
+    def worth_fire?(target)
+      angle_to(target) - gun.absolute_angle < 10.degrees and close_enough_to_shoot(target)
+    end
+
+    def engage(target)
+      advance_to(target)
+      stop! if distance_to(target) < 300
+    end
+
+    def shoot(target)
+      aim(target)
+      fire! if worth_fire?(target)
+    end
+  end
+
   TrackedBot.class_eval { include TrackedBotExtensions }
+  PewPew.class_eval { include PewPewExtentions }
 
   class AI
     attr_accessor :player
