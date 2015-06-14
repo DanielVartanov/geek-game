@@ -4,8 +4,7 @@ module GeekGame
 
     factory_properties production_time: 1.0
 
-    attr_reader :position, :angle, :player, :production_start_time
-    attr_accessor :player
+    attr_reader :position, :angle, :production_start_time
 
     def initialize(options)
       self.position = options[:position]

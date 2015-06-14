@@ -4,7 +4,7 @@ module Graphics
 
     def draw
       radius = 25
-      surface.draw_circle_a(position.to_screen(surface), radius, surface.default_color)
+      surface.draw_circle_a(position.to_screen(surface), radius, player_color)
     end
   end
 end

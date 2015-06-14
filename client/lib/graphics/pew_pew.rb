@@ -2,7 +2,7 @@ require 'forwardable'
 
 module Graphics
   class PewPew < Base
-    alias :tracked_bot :game_object
+    alias :pew_pew :game_object
 
     def draw_track(center, size)
       side_length = size.to_f
@@ -23,7 +23,8 @@ module Graphics
     def draw_triangle(base)
       surface.triangle(Point(base.x - 3, base.y).rotate_around(base, angle),
                        Point(base.x, base.y + 5.2).rotate_around(base, angle),
-                       Point(base.x + 3, base.y).rotate_around(base, angle))
+                       Point(base.x + 3, base.y).rotate_around(base, angle),
+                       player_color)
     end
 
     def draw_health_bar
@@ -77,7 +78,7 @@ module Graphics
     end
 
     def draw_axis
-      surface.line track_axis
+      surface.line track_axis, player_color
     end
 
     def draw

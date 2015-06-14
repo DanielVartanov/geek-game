@@ -20,11 +20,13 @@ module GeekGame
 
     def to_hash
       {
-        :id => id,
-        :type => self.class.to_s.demodulize.underscore,
-        :position => position.to_array,
-        :angle => angle
-      }
+        id: id,
+        type: self.class.to_s.demodulize.underscore,
+        position: position.to_array,
+        angle: angle
+      }.tap do |hash|
+        hash[:player_color] = player.color if player
+      end
     end
 
     alias :id :object_id
