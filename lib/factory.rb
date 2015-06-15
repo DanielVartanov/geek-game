@@ -1,8 +1,6 @@
 module GeekGame
   class Factory < GameObject
     define_properties :production_time, :bot_class
-    factory_properties production_time: 5.0, bot_class: PewPew
-
     attr_reader :position, :angle, :production_start_time
 
     def initialize(options)
