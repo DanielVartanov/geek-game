@@ -1,18 +1,9 @@
 module GeekGame
   class Player
-    attr_reader :color, :factory
+    attr_accessor :color, :recharger
 
     def initialize(options)
       self.color = options[:color]
     end
-
-    def factory=(factory)
-      factory.player = self
-      @factory = factory
-    end    
-
-    protected
-
-    attr_writer :color
   end
 end

@@ -1,8 +1,7 @@
 module GeekGame
   class Factory < GameObject
-    define_properties :production_time
-
-    factory_properties production_time: 1.0
+    define_properties :production_time, :bot_class
+    factory_properties production_time: 5.0, bot_class: PewPew
 
     attr_reader :position, :angle, :production_start_time
 
@@ -10,31 +9,20 @@ module GeekGame
       self.position = options[:position]
       self.angle = options[:angle]
       self.player = options[:player]
-      self.producing = false
+      self.production_start_time = Time.now
 
       super()
     end
 
-    def produce!
-      return if producing?
-
-      self.producing = true
-      self.production_start_time = Time.now
-    end
-
     def update(seconds)
-      if producing? and production_time_passed?
+      if production_time_passed?
         create_bot
-        self.producing = false
+        self.production_start_time = Time.now
       end
     end
 
     def orientation
       Vector.polar(1, angle)
-    end
-
-    def producing?
-      self.producing
     end
 
     def progress
@@ -48,12 +36,11 @@ module GeekGame
     protected
 
     def create_bot
-      PewPew.new position: position.advance_by(orientation * 25),
+      bot_class.new position: position.advance_by(orientation * 25),
         angle: angle - 90.degrees,
         player: player
     end
 
-    attr_writer  :position, :angle, :production_start_time
-    attr_accessor :producing
+    attr_writer :position, :angle, :production_start_time
   end
 end

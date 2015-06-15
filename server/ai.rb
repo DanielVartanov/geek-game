@@ -88,14 +88,12 @@ module GeekGame
     end
 
     def act!(seconds)
-      player.factory.produce!
-
       my_bots.select { |bot| bot.is_a?(PewPew) }.each do |bot|
         target = enemy_bots.sort { |left, right| bot.distance_to(left) <=> bot.distance_to(right) }.first
         return if target.nil?
 
         if bot.battery.charge < 0.2
-          bot.engage(player.factory)
+          bot.engage(player.recharger)
         else
           bot.engage(target)
           bot.shoot(target)
