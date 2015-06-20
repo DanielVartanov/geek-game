@@ -23,6 +23,13 @@ module GeekGame
       [seconds_passed_since_last_extraction / cooldown_period, 1].min
     end
 
+    def to_hash
+      super.tap do |hash|
+        hash[:progress] = progress
+        hash[:metal_bars_available] = metal_bars_available
+      end
+    end
+
     protected
 
     attr_writer :metal_bars_available
