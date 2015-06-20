@@ -12,19 +12,25 @@ module GeekGame
 
     def update(seconds)
       self.seconds_passed_since_last_extraction += seconds
-      if seconds_passed_since_last_extraction >= cooldown_period
-        self.metal_bars_available = true
-        reset!
-      end
+
+      extract_metal_bars! if seconds_passed_since_last_extraction >= cooldown_period
     end
 
     attr_reader :metal_bars_available
     alias :metal_bars_available? :metal_bars_available
 
+    def progress
+      [seconds_passed_since_last_extraction / cooldown_period, 1].min
+    end
+
     protected
 
     attr_writer :metal_bars_available
     attr_accessor :seconds_passed_since_last_extraction
+
+    def extract_metal_bars!
+      self.metal_bars_available = true
+    end
 
     def reset!
       self.seconds_passed_since_last_extraction = 0
