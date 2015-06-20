@@ -17,10 +17,8 @@ module GeekGame
       def push
         objects_hash = GeekGame.game_objects.to_hashes
         data_to_transmit = BSON.serialize(objects_hash).to_s
-        print " pushing [#{data_to_transmit.size} bytes]..."
 
         @client.print data_to_transmit
-        puts " done"
       end
     end
   end
