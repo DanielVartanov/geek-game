@@ -1,8 +1,8 @@
 module GeekGame
   class Shell < GameObject
-    VELOCITY = 240
+    VELOCITY = 200
     MAX_RANGE = 400
-    MAX_DAMAGE = 300
+    MAX_DAMAGE = 80
 
     attr_reader :owner, :angle
 

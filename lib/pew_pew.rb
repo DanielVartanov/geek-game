@@ -3,7 +3,7 @@ module GeekGame
     define_properties :gun_reload_time, :shooting_cost
 
     tracked_bot_properties max_velocity: 70.0, axis_length: 50.0, max_health_points: 100.0, movement_cost: 0.025
-    pew_pew_properties gun_reload_time: 0.5, shooting_cost: 0.1
+    pew_pew_properties gun_reload_time: 2, shooting_cost: 0.2
 
     attr_reader :gun, :shells
 
