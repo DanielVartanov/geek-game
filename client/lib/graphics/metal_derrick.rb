@@ -3,7 +3,6 @@ module Graphics
     alias :metal_derrick :game_object
 
     def draw
-      p metal_derrick
       draw_body
     end
 
