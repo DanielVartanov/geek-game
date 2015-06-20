@@ -1,7 +1,7 @@
 module GeekGame
   class Factory < GameObject
     define_properties :production_time, :bot_class
-    attr_reader :position, :angle, :production_start_time
+    attr_reader :position, :angle, :production_start_time, :player
 
     def initialize(options)
       self.position = options[:position]
@@ -39,6 +39,6 @@ module GeekGame
         player: player
     end
 
-    attr_writer :position, :angle, :production_start_time
+    attr_writer :position, :angle, :production_start_time, :player
   end
 end

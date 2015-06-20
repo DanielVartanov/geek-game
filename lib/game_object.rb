@@ -2,7 +2,8 @@ require 'active_support/inflector'
 require 'active_support/core_ext/module/delegation'
 
 module GeekGame
-  class GameObject < Struct.new(:player, :position, :angle)
+  class GameObject
+    attr_reader :position
     attr_reader :birth_time
 
     def initialize
@@ -22,10 +23,10 @@ module GeekGame
       {
         id: id,
         type: self.class.to_s.demodulize.underscore,
-        position: position.to_array,
-        angle: angle
+        position: position.to_array
       }.tap do |hash|
-        hash[:player_color] = player.color if player
+        hash[:player_color] = player.color if respond_to?(:player) && player
+        hash[:angle] = angle if respond_to?(:angle)
       end
     end
 
@@ -50,6 +51,7 @@ module GeekGame
 
     protected
 
+    attr_writer :position
     attr_writer :birth_time
 
     def register!

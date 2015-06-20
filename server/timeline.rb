@@ -10,12 +10,14 @@ module GeekGame
 
       # This is temporarily here
       @red = Player.new color: [0xff, 0, 0]
+      MetalDerrick.new position: Point(-400, -200)
       @red.recharger = Recharger.new position: Point(-400, -200), player: @red
       PewPewFactory.new position: Point(-300, -100), angle: 45.degrees, player: @red
       EngineerFactory.new position: Point(-500, -200), angle: -135.degrees, player: @red
       build_initial_engineers_for @red
 
       @blue = Player.new color: [0, 0, 0xff]
+      MetalDerrick.new position: Point(400, 200)
       @blue.recharger = Recharger.new position: Point(400, 200), player: @blue
       PewPewFactory.new position: Point(300, 100), angle: -135.degrees, player: @blue
       EngineerFactory.new position: Point(500, 200), angle: 45.degrees, player: @blue
@@ -35,7 +37,6 @@ module GeekGame
       loop do
         handle_system_events
         seconds_passed = @clock.tick.seconds
-        puts "#{seconds_passed} passed"
         gradually_update(seconds_passed)
 
         @network_server.push

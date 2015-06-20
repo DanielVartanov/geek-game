@@ -7,7 +7,11 @@ module Shapes
   def circle(center, radius, color=default_color)
     draw_circle_a(center.to_screen(self), radius, color)
   end
-  
+
+  def solid_circle(center, radius, color=default_color)
+    draw_circle_s(center.to_screen(self), radius, color)
+  end
+
   def line(line, color=default_color)
     draw_line(line.point1.to_screen(self), line.point2.to_screen(self), color)
   end
@@ -27,7 +31,7 @@ module Shapes
     corners = [Point(center.x - side_length / 2, center.y - side_length / 2),
                Point(center.x + side_length / 2, center.y - side_length / 2),
                Point(center.x + side_length / 2, center.y + side_length / 2),
-               Point(center.x - side_length / 2, center.y + side_length / 2)]    
+               Point(center.x - side_length / 2, center.y + side_length / 2)]
     rectangle(corners, color)
   end
 end

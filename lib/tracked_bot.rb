@@ -4,9 +4,10 @@ module GeekGame
     define_properties :max_velocity, :axis_length, :max_health_points, :movement_cost
 
     attr_reader :left_track, :right_track
-
     attr_reader :health_points
     attr_reader :battery
+    attr_reader :player
+    attr_reader :angle
 
     def track_axis
       Line(left_track_position, right_track_position)
@@ -70,6 +71,8 @@ module GeekGame
     attr_writer :left_track, :right_track
     attr_writer :battery
     attr_writer :health_points
+    attr_writer :player
+    attr_writer :angle
 
     def advancing_cost(seconds)
       movement_cost * seconds * (left_track.power + right_track.power)
