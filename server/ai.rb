@@ -93,7 +93,7 @@ module GeekGame
         return if target.nil?
 
         if bot.battery.charge < 0.2
-          bot.engage(player.recharger)
+          bot.advance_to(player.recharger)
         else
           bot.engage(target)
           bot.shoot(target)
