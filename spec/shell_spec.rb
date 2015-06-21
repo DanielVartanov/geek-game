@@ -32,7 +32,7 @@ describe Shell do
         @shell.update(0.1)
       end
 
-      it { should be_false }
+      it { is_expected.to be false }
     end
 
     context "when flight range is greater than max range" do
@@ -40,7 +40,7 @@ describe Shell do
         @shell.update(1e3)
       end
 
-      it { should be_true }
+      it { is_expected.to be true }
     end
   end
 
@@ -52,19 +52,19 @@ describe Shell do
     context "when shell is within track axis diameter" do
       before { @shell = Shell.new :position => Point(10, 10) }
 
-      it { should be_true }
+      it { is_expected.to be true }
     end
 
     context "when shell is outside bot bounds" do
       before { @shell = Shell.new :position => Point(100, 100) }
 
-      it { should be_false }
+      it { is_expected.to be false }
     end
 
     context "when shell is right at the bound of bot" do
       before { @shell = Shell.new :position => Point(0, PewPew.axis_length.to_f / 2) }
 
-      it { should be_true }
+      it { is_expected.to be true }
     end
   end
 end

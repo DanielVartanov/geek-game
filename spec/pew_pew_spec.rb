@@ -17,9 +17,7 @@ describe PewPew do
 
   describe "firing" do
     context "when bot is just created" do
-      it "should be able to fire immediately" do
-        pending
-      end
+      it "should be able to fire immediately"
     end
   end
 
