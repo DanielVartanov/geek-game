@@ -1,5 +1,5 @@
 module GeekGame
-  class MetalDerrick < GameObject
+  class MetalDerrick < Facility
     define_properties :metal_bars_per_chunk, :cooldown_period
     metal_derrick_properties metal_bars_per_chunk: 5, cooldown_period: 3.0
 

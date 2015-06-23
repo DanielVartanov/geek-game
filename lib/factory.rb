@@ -1,5 +1,5 @@
 module GeekGame
-  class Factory < GameObject
+  class Factory < Facility
     define_properties :production_time, :bot_class
     attr_reader :position, :angle, :production_start_time, :player
 

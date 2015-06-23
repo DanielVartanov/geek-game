@@ -1,5 +1,5 @@
 module GeekGame
-  class Recharger < GameObject
+  class Recharger < Facility
     define_properties :range, :charge_rate
 
     recharger_properties range: 300.0, charge_rate: 0.1
