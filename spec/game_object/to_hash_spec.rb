@@ -8,7 +8,7 @@ describe GameObject, "#to_hash" do
 
     it "should contain all properties" do
       subject[:position].should == [128, 256]
-      subject[:angle].should == Math::PI
+      subject[:angle].should == 90.degrees
     end
 
     it "should contain a type" do

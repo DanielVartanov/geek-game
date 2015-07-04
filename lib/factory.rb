@@ -35,7 +35,7 @@ module GeekGame
 
     def create_bot
       bot_class.new position: position.advance_by(orientation * 25),
-        angle: angle - 90.degrees,
+        angle: angle,
         player: player
     end
 

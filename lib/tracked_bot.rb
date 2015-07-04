@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 module GeekGame
   class TrackedBot < GameObject
     define_properties :max_velocity, :axis_length, :max_health_points, :movement_cost
@@ -18,7 +17,7 @@ module GeekGame
       self.right_track = RightTrack.new(self)
 
       self.position = initial_params[:position] || Point(0, 0)
-      self.angle = initial_params[:angle] || 0
+      self.angle = (initial_params[:angle] || 0) - 90.degrees
       self.player = initial_params[:player]
 
       self.health_points = max_health_points
@@ -63,7 +62,11 @@ module GeekGame
     end
 
     def normalized_movement_vector
-      Vector(1, 0).rotate(angle).rotate(90.degrees)
+      normalized_axis_vector.rotate(90.degrees)
+    end
+
+    def normalized_axis_vector
+      Vector(1, 0).rotate(angle)
     end
 
     protected

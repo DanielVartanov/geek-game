@@ -1,15 +1,7 @@
 module GeekGame
   module TrackedBotExtensions
-    def vector_to(target)
-      Vector.by_end_points(self.position, target.position)
-    end
-
     def angle_to(target)
       Vector(1, 0).signed_angle_with(vector_to(target))
-    end
-
-    def distance_to(target)
-      position.distance_to(target.position)
     end
 
     def stop!

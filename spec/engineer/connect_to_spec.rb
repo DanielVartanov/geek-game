@@ -30,6 +30,10 @@ describe Engineer, '#connect_to' do
   end
 
   context 'when bot cannot connect to a facility' do
-    it 'returns nil'
+    let(:bot) { Engineer.new position: Point(0, 100), angle: 180.degrees }
+
+    it 'returns nil' do
+      expect(bot.connect_to(facility)).to be_nil
+    end
   end
 end

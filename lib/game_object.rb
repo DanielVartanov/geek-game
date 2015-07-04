@@ -19,6 +19,14 @@ module GeekGame
       Time.now - birth_time
     end
 
+    def vector_to(another_object)
+      Vector.by_end_points(position, another_object.position)
+    end
+
+    def distance_to(another_object)
+      position.distance_to(another_object.position)
+    end
+
     def to_hash
       {
         id: id,

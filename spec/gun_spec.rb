@@ -89,7 +89,7 @@ describe Gun do
 
     describe "when bot angle is -45 degrees" do
       describe "when gun angle is 135 degrees" do
-        let(:bot) { PewPew.new angle: -45.degrees, gun_relative_angle: 135.degrees }
+        let(:bot) { PewPew.new angle: 45.degrees, gun_relative_angle: 135.degrees }
 
         it "should return gun angle absolute value" do
           should === 90.degrees

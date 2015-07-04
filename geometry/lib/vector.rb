@@ -10,8 +10,8 @@ class Vector < Struct.new(:x, :y)
   def ==(another_vector)
     x === another_vector.x && y === another_vector.y
   end
-  
-  def modulus      
+
+  def modulus
     Math.hypot(x ,y)
   end
 
@@ -31,16 +31,24 @@ class Vector < Struct.new(:x, :y)
   def cross_product(vector)
     x * vector.y - y * vector.x
   end
-  
+
+  def collinear_with?(vector)
+    cross_product(vector) === 0
+  end
+
+  def same_direction_as?(vector)
+   collinear_with?(vector) && scalar_product(vector) > 0
+  end
+
   def rotate(angle)
     self.to_point.rotate_around(Point(0, 0), angle).to_radius
   end
-  
+
   def +(vector)
     Vector.new(x + vector.x, y + vector.y)
   end
 
-  def *(scalar)      
+  def *(scalar)
     Vector.new(x * scalar, y * scalar)
   end
 
