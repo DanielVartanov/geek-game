@@ -12,9 +12,11 @@ describe Engineer, '#connection' do
     it { is_expected.not_to be nil }
 
     it { is_expected.to eq facility.connections.last }
-  end
 
-  context 'when connection is broken' do
-    it 'is_expected.to be nil'
+    context 'when connection is broken' do
+      before { bot.disconnect }
+
+      it { is_expected.to be nil }
+    end
   end
 end

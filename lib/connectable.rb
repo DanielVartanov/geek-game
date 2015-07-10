@@ -13,8 +13,17 @@ module GeekGame
       Connection.new bot: self, facility: facility
     end
 
+    def disconnect
+      return unless connection
+      connection.close
+    end
+
     def accept_connection(connection)
       self.connection = connection
+    end
+
+    def remove_connection
+      self.connection = nil
     end
 
     def connected_facility

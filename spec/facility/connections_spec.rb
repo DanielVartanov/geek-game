@@ -19,5 +19,11 @@ describe Facility, '#connections' do
     end
 
     it { is_expected.to eq [second_bot.connection, first_bot.connection] }
+
+    context 'when connection is closed' do
+      before { first_bot.disconnect }
+
+      it { is_expected.to eq [second_bot.connection] }
+    end
   end
 end

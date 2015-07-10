@@ -14,6 +14,11 @@ module GeekGame
 
     end
 
+    def close
+      bot.remove_connection
+      facility.remove_connection(self)
+    end
+
     protected
 
     attr_writer :bot, :facility

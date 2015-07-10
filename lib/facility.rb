@@ -11,6 +11,10 @@ module GeekGame
       connections << connection
     end
 
+    def remove_connection(connection)
+      connections.delete connection
+    end
+
     def connected_bots
       connections.map(&:bot)
     end
