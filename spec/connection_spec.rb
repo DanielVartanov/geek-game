@@ -72,19 +72,53 @@ describe Connection do
     end
 
     context 'when bot moves' do
-      it 'disappears'
+      before do
+        bot.motor! 1, 1
+        bot.update(1)
+        connection.update(1)
+      end
+
+      it 'disappears' do
+        expect(bot).not_to be_connected_to_facility
+        expect(facility.connected_bots).to be_empty
+      end
     end
 
     context 'when bot turns away' do
-      it 'disappears'
+      before do
+        bot.motor! 1, -1
+        bot.update(1)
+        connection.update(1)
+      end
+
+      it 'disappears' do
+        expect(bot).not_to be_connected_to_facility
+        expect(facility.connected_bots).to be_empty
+      end
     end
   end
 
   context 'when several bots are connected to factility' do
-    specify 'facility forms a queue of bots'
+    let(:third_bot) { Engineer.new position: Point(10, 0), angle: 180.degrees }
+    let(:second_bot) { Engineer.new position: Point(0, -10), angle: 90.degrees }
+    let(:first_bot) { Engineer.new position: Point(-10, 0), angle: 0.degrees }
 
-    context 'when connection disappears' do
-      specify 'the queue is shifted accordingly'
+    before do
+      [first_bot, second_bot, third_bot].each do |bot|
+        bot.connect_to facility
+      end
+    end
+
+    specify 'facility forms a queue of bots' do
+      expect(facility.connected_bots).to eq [first_bot, second_bot, third_bot]
+    end
+
+    context 'when bot disconnects' do
+      before { second_bot.disconnect }
+
+      specify 'the queue is shifted accordingly' do
+        expect(facility.connected_bots).to eq [first_bot, third_bot]
+      end
     end
   end
 end

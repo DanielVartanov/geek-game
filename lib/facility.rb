@@ -7,16 +7,18 @@ module GeekGame
       super
     end
 
-    def accept_connection(connection)
+    def connected_bots
+      connections.map(&:bot)
+    end
+
+    # This method is to be called only by Connection
+    def connection_established(connection)
       connections << connection
     end
 
-    def remove_connection(connection)
+    # This method is to be called only by Connection
+    def connection_closed(connection)
       connections.delete connection
-    end
-
-    def connected_bots
-      connections.map(&:bot)
     end
 
     protected

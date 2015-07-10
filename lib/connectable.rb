@@ -18,14 +18,6 @@ module GeekGame
       connection.close
     end
 
-    def accept_connection(connection)
-      self.connection = connection
-    end
-
-    def remove_connection
-      self.connection = nil
-    end
-
     def connected_facility
       connection.try(:facility)
     end
@@ -44,6 +36,16 @@ module GeekGame
 
     def directed_towards?(facility)
       vector_to(facility).same_direction_as?(normalized_movement_vector)
+    end
+
+    # This method is to be called only by Connection
+    def connection_established(connection)
+      self.connection = connection
+    end
+
+    # This method is to be called only by Connection
+    def connection_closed
+      self.connection = nil
     end
 
     protected

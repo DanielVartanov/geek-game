@@ -6,17 +6,17 @@ module GeekGame
       self.bot = bot
       self.facility = facility
 
-      bot.accept_connection(self)
-      facility.accept_connection(self)
+      bot.connection_established(self)
+      facility.connection_established(self)
     end
 
     def update(_)
-
+      close unless bot.can_connect_to?(facility)
     end
 
     def close
-      bot.remove_connection
-      facility.remove_connection(self)
+      bot.connection_closed
+      facility.connection_closed(self)
     end
 
     protected
