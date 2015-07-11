@@ -11,12 +11,12 @@ describe MetalDerrick do
         is_expected.to be false
       end
 
-      context 'when less than 3 seconds passed' do
-        before { metal_derrick.update(2.9) }
+      context 'when less than 2 seconds passed' do
+        before { metal_derrick.update(1.9) }
 
         it { is_expected.to be false }
 
-        context 'when 3 seconds passed' do
+        context 'when 2 seconds passed' do
           before { metal_derrick.update(0.1) }
 
           it { is_expected.to be true }
@@ -40,17 +40,17 @@ describe MetalDerrick do
       it { is_expected.to eq 0 }
 
       context 'when half of cooldown period passed' do
-        before { metal_derrick.update(1.5) }
+        before { metal_derrick.update(1.0) }
 
         it { is_expected.to eq 0.5 }
 
         context 'when 3/4 of cooldown period passed' do
-          before { metal_derrick.update(0.75) }
+          before { metal_derrick.update(0.5) }
 
           it { is_expected.to eq 0.75 }
 
           context 'when metal bars are available' do
-            before { metal_derrick.update(0.75) }
+            before { metal_derrick.update(0.5) }
 
             it { is_expected.to eq 1.0 }
 
