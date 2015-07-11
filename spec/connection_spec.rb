@@ -62,7 +62,7 @@ describe Connection do
     context 'when time passes' do
       before do
         [bot, facility, connection].each do |object|
-          object.update(100)
+          object.update(1.0)
         end
       end
 

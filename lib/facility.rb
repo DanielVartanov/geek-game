@@ -11,6 +11,10 @@ module GeekGame
       connections.map(&:bot)
     end
 
+    def disconnect(bot)
+      bot.connection.close
+    end
+
     # This method is to be called only by Connection
     def connection_established(connection)
       connections << connection
