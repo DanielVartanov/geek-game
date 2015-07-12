@@ -33,7 +33,9 @@ module GeekGame
     end
 
     def progress
-      production_lasts_for / production_time
+      producing? ?
+        production_lasts_for / production_time :
+        0
     end
 
     def production_time_passed?
