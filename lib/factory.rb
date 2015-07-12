@@ -1,13 +1,14 @@
 module GeekGame
   class Factory < Facility
     define_properties :production_time, :bot_class
-    attr_reader :position, :angle, :production_start_time, :player
+    attr_reader :position, :angle, :production_start_time, :player, :metal_bars_count
 
     def initialize(options)
       self.position = options[:position]
       self.angle = options[:angle]
       self.player = options[:player]
       self.production_start_time = Time.now
+      self.metal_bars_count = 0
 
       super()
     end
@@ -31,6 +32,10 @@ module GeekGame
       Time.now - production_start_time > production_time
     end
 
+    def receive_metal_bars(count)
+      self.metal_bars_count += count
+    end
+
     protected
 
     def create_bot
@@ -39,6 +44,6 @@ module GeekGame
         player: player
     end
 
-    attr_writer :position, :angle, :production_start_time, :player
+    attr_writer :position, :angle, :production_start_time, :player, :metal_bars_count
   end
 end
