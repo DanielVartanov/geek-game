@@ -64,7 +64,7 @@ describe Factory, 'receiving metal' do
 
   context 'when several enginners are connected at the same time' do
     let!(:engineers) do
-      3.times.map do
+      5.times.map do
         Engineer.new position: Point(10, 0), angle: 180.degrees
       end.each do |engineer|
         engineer.take_metal
@@ -75,12 +75,12 @@ describe Factory, 'receiving metal' do
     context 'after 0.5 seconds' do
       before { update(0.5) }
 
-      specify 'they all give their metal' do
+      specify 'they all give their metal (15 are consumed immediately for production)' do
         engineers.each do |engineer|
           expect(engineer.metal_bars_carried).to eq false
         end
 
-        expect(pew_pew_factory.metal_bars_count).to eq 15
+        expect(pew_pew_factory.metal_bars_count).to eq 10
       end
 
       specify 'they all are disconnected' do
