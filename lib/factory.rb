@@ -46,6 +46,14 @@ module GeekGame
       self.metal_bars_count += count
     end
 
+    def to_hash
+      super.tap do |base_hash|
+        base_hash[:producing] = producing
+        base_hash[:progress] = progress
+        base_hash[:metal_bars_count] = metal_bars_count
+      end
+    end
+
     protected
 
     def start_production!

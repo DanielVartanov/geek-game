@@ -1,8 +1,7 @@
 module Graphics
-  class PewPewFactory < Base
-    def draw
-      radius = 25
-      surface.draw_circle_a(position.to_screen(surface), radius, player_color)
+  class PewPewFactory < Factory
+    def self.radius
+      25
     end
   end
 end

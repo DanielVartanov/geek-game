@@ -24,6 +24,12 @@ module GeekGame
       end
     end
 
+    def to_hash
+      super.tap do |base_hash|
+        base_hash[:metal_bars_carried] = metal_bars_carried
+      end
+    end
+
     protected
 
     attr_writer :metal_bars_carried

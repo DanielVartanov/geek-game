@@ -1,8 +1,7 @@
 module Graphics
-  class EngineerFactory < Base
-    def draw
-      radius = 12.5
-      surface.draw_circle_a(position.to_screen(surface), radius, player_color)
+  class EngineerFactory < Factory
+    def self.radius
+      12.5
     end
   end
 end
