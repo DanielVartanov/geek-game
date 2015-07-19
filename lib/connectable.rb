@@ -3,6 +3,8 @@ require 'active_support/core_ext/object/blank'
 
 module GeekGame
   module Connectable
+    DIRECTION_PRECISION = 1.degrees
+
     attr_reader :connection
 
     def connect_to(facility)
@@ -33,7 +35,7 @@ module GeekGame
     end
 
     def directed_towards?(facility)
-      vector_to(facility).same_direction_as?(normalized_movement_vector)
+      normalized_movement_vector.angle_with(vector_to(facility)) <= DIRECTION_PRECISION
     end
 
     # This method is to be called only by Connection

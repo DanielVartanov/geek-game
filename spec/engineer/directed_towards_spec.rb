@@ -11,14 +11,14 @@ describe Engineer, '#directed_towards?' do
     it { is_expected.to be true }
   end
 
-  context 'when bot is directed almost towads facility' do
-    let(:bot) { Engineer.new position: Point(10, 0), angle: 181.degrees }
+  context 'when bot is directed within 1 degree towards facility' do
+    let(:bot) { Engineer.new position: Point(10, 0), angle: 180.9.degrees }
 
-    it { is_expected.to be false }
+    it { is_expected.to be true }
   end
 
   context 'when bot is directed elsewhere' do
-    let(:bot) { Engineer.new position: Point(10, 0), angle: 90.degrees }
+    let(:bot) { Engineer.new position: Point(10, 0), angle: 190.degrees }
 
     it { is_expected.to be false }
   end

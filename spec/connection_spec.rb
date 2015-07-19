@@ -27,7 +27,7 @@ describe Connection do
     end
 
     context 'when bot is not directed to center of facility' do
-      let(:bot) { Engineer.new position: Point(10, 0), angle: 181.degrees }
+      let(:bot) { Engineer.new position: Point(10, 0), angle: 182.degrees }
 
       include_examples 'it does not connect'
     end
