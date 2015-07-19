@@ -1,6 +1,6 @@
 module GeekGame
   class TrackedBot < GameObject
-    define_properties :max_velocity, :axis_length, :max_health_points, :movement_cost
+    define_properties :max_velocity, :axis_length, :max_health_points, :movement_cost, :track_class
 
     attr_reader :left_track, :right_track
     attr_reader :health_points
@@ -14,8 +14,8 @@ module GeekGame
     end
 
     def initialize(initial_params = {})
-      self.left_track = Track.new
-      self.right_track = Track.new
+      self.left_track = track_class.new
+      self.right_track = track_class.new
 
       self.position = initial_params[:position] || Point(0, 0)
       self.angle = (initial_params[:angle] || 0) - 90.degrees

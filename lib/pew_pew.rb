@@ -2,7 +2,7 @@ module GeekGame
   class PewPew < TrackedBot
     define_properties :gun_reload_time, :shooting_cost
 
-    tracked_bot_properties max_velocity: 70.0, axis_length: 50.0, max_health_points: 100.0, movement_cost: 0.025
+    tracked_bot_properties max_velocity: 70.0, axis_length: 50.0, max_health_points: 100.0, movement_cost: 0.025, track_class: PewPewTrack
     pew_pew_properties gun_reload_time: 2, shooting_cost: 0.2
 
     attr_reader :gun, :shells

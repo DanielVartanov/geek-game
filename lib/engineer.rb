@@ -2,7 +2,7 @@ module GeekGame
   class Engineer < TrackedBot
     include Connectable
 
-    tracked_bot_properties max_velocity: 70.0, axis_length: 25.0, max_health_points: 50.0, movement_cost: 0.025
+    tracked_bot_properties max_velocity: 70.0, axis_length: 25.0, max_health_points: 50.0, movement_cost: 0.025, track_class: EngineerTrack
 
     attr_reader :metal_bars_carried
     alias :metal_bars_carried? :metal_bars_carried

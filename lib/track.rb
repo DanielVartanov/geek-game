@@ -1,9 +1,5 @@
 module GeekGame
   class Track
-    def self.power_acceleration
-      0.7
-    end
-
     attr_reader :power
     attr_accessor :target_power
 
