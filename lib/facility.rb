@@ -1,5 +1,6 @@
 module GeekGame
   class Facility < GameObject
+    define_properties :connection_distance
     attr_reader :connections
 
     def initialize(*args)

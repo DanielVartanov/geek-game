@@ -3,8 +3,6 @@ require 'active_support/core_ext/object/blank'
 
 module GeekGame
   module Connectable
-    CONNECTION_DISTANCE = 10
-
     attr_reader :connection
 
     def connect_to(facility)
@@ -31,7 +29,7 @@ module GeekGame
     end
 
     def close_enough_to?(facility)
-      position.distance_to(facility.position) <= CONNECTION_DISTANCE
+      position.distance_to(facility.position) <= facility.connection_distance
     end
 
     def directed_towards?(facility)
