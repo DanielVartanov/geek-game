@@ -1,5 +1,9 @@
 module Graphics
   class PewPew < TrackedBot
+    def self.track_size
+      8
+    end
+
     def axis_length
       GeekGame::PewPew.axis_length
     end

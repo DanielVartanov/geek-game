@@ -1,5 +1,9 @@
 module Graphics
   class Engineer < TrackedBot
+    def self.track_size
+      6
+    end
+
     def axis_length
       GeekGame::Engineer.axis_length
     end

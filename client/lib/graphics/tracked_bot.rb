@@ -86,8 +86,8 @@ module Graphics
       draw_triangle(position.advance_by(axis_vector * (axis_length / 4)))
       draw_triangle(position.advance_by(axis_vector * (axis_length / 4 * (-1))))
 
-      draw_track(left_track_position, 8 * left_track_power)
-      draw_track(right_track_position, 8 * right_track_power)
+      draw_track(left_track_position, self.class.track_size * left_track_power)
+      draw_track(right_track_position, self.class.track_size * right_track_power)
 
       draw_health_bar
       draw_battery_charge
