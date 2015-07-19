@@ -4,7 +4,7 @@ module GeekGame
 
     recharger_properties range: 300.0, charge_rate: 0.1
 
-    attr_reader :player
+    attr_reader :player, :position
 
     def initialize(params)
       self.position = params[:position]
@@ -27,6 +27,6 @@ module GeekGame
 
     protected
 
-    attr_writer :player
+    attr_writer :player, :position
   end
 end

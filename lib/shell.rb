@@ -4,7 +4,7 @@ module GeekGame
     MAX_RANGE = 400
     MAX_DAMAGE = 80
 
-    attr_reader :owner, :angle
+    attr_reader :owner, :angle, :position
 
     def initialize(params={})
       self.angle = params[:angle] || 0
@@ -43,7 +43,7 @@ module GeekGame
 
     protected
 
-    attr_writer :owner, :angle
+    attr_writer :owner, :angle, :position
     attr_accessor :initial_position
   end
 end

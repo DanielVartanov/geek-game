@@ -7,6 +7,7 @@ module GeekGame
     attr_reader :battery
     attr_reader :player
     attr_reader :angle
+    attr_reader :position
 
     def track_axis
       Line(left_track_position, right_track_position)
@@ -76,6 +77,7 @@ module GeekGame
     attr_writer :health_points
     attr_writer :player
     attr_writer :angle
+    attr_writer :position
 
     def advancing_cost(seconds)
       movement_cost * seconds * (left_track.power + right_track.power)

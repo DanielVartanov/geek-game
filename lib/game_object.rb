@@ -3,7 +3,6 @@ require 'active_support/core_ext/module/delegation'
 
 module GeekGame
   class GameObject
-    attr_reader :position
     attr_reader :birth_time
 
     def initialize
@@ -30,9 +29,9 @@ module GeekGame
     def to_hash
       {
         id: id,
-        type: self.class.to_s.demodulize.underscore,
-        position: position.to_array
+        type: self.class.to_s.demodulize.underscore
       }.tap do |hash|
+        hash[:position] = position.to_array if respond_to?(:position) && position
         hash[:player_color] = player.color if respond_to?(:player) && player
         hash[:angle] = angle if respond_to?(:angle)
       end
@@ -59,11 +58,14 @@ module GeekGame
 
     protected
 
-    attr_writer :position
     attr_writer :birth_time
 
     def register!
       GeekGame.game_objects << self
+    end
+
+    def deregister!
+      GeekGame.game_objects.delete self
     end
   end
 end

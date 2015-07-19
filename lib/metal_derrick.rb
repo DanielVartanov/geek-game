@@ -5,7 +5,7 @@ module GeekGame
     facility_properties connection_distance: 20
     metal_derrick_properties metal_bars_per_chunk: 5, cooldown_period: 2.0
 
-    attr_reader :metal_bars_available
+    attr_reader :metal_bars_available, :position
     alias :metal_bars_available? :metal_bars_available
 
     def initialize(position:)
@@ -41,7 +41,7 @@ module GeekGame
 
     protected
 
-    attr_writer :metal_bars_available
+    attr_writer :metal_bars_available, :position
     attr_accessor :seconds_passed_since_last_extraction
 
     def can_give_metal_to?(bot)
