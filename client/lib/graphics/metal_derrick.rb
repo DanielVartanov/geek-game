@@ -9,8 +9,6 @@ module Graphics
 
     protected
 
-    METAL_COLOR = [0x46, 0x82, 0xb4]
-
     def draw_body
       surface.solid_circle position, 10, inner_color_by_progress
     end

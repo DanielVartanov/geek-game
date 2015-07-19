@@ -1,0 +1,3 @@
+module Graphics
+  METAL_COLOR = [0x46, 0x82, 0xb4]
+end
