@@ -21,6 +21,7 @@ module GeekGame
     def close
       bot.connection_closed
       facility.connection_closed(self)
+      deregister!
     end
 
     protected
