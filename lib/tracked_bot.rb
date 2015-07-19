@@ -14,8 +14,8 @@ module GeekGame
     end
 
     def initialize(initial_params = {})
-      self.left_track = LeftTrack.new(self)
-      self.right_track = RightTrack.new(self)
+      self.left_track = Track.new
+      self.right_track = Track.new
 
       self.position = initial_params[:position] || Point(0, 0)
       self.angle = (initial_params[:angle] || 0) - 90.degrees
@@ -49,17 +49,19 @@ module GeekGame
       super.tap do |base_hash|
         base_hash[:health_points] = health_points
         base_hash[:battery] = battery.to_hash
-        base_hash[:left_track] = left_track.to_hash
-        base_hash[:right_track] = right_track.to_hash
+        base_hash[:left_track_position_coordinates] = left_track_position.to_array
+        base_hash[:right_track_position_coordinates] = right_track_position.to_array
+        base_hash[:left_track_power] = left_track.power
+        base_hash[:right_track_power] = right_track.power
       end
     end
 
     def left_track_position
-      left_track.position
+      right_track_position.rotate_around(position, 180.degrees)
     end
 
     def right_track_position
-      right_track.position
+      position.advance_by(normalized_axis_vector * (axis_length / 2))
     end
 
     def normalized_movement_vector

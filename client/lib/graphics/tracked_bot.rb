@@ -55,19 +55,11 @@ module Graphics
     end
 
     def left_track_position
-      Point(*left_track["position"])
+      Point(*left_track_position_coordinates)
     end
 
     def right_track_position
-      Point(*right_track["position"])
-    end
-
-    def left_track_power
-      left_track["power"]
-    end
-
-    def right_track_power
-      right_track["power"]
+      Point(*right_track_position_coordinates)
     end
 
     def track_axis

@@ -1,12 +1,13 @@
 module GeekGame
   class Track
-    TRACK_POWER_ACCELERATION = 0.7
+    def self.power_acceleration
+      0.7
+    end
 
-    attr_reader :power, :bot
+    attr_reader :power
     attr_accessor :target_power
 
-    def initialize(bot)
-      self.bot = bot
+    def initialize
       self.power = 0
       self.target_power = 0
     end
@@ -14,19 +15,15 @@ module GeekGame
     def update_power(seconds)
       power_diff = target_power - power
 
-      if power_diff.abs < TRACK_POWER_ACCELERATION * seconds
+      if power_diff.abs < self.class.power_acceleration * seconds
         self.power = target_power
       else
-        self.power += TRACK_POWER_ACCELERATION * seconds * power_diff.sign
+        self.power += self.class.power_acceleration * seconds * power_diff.sign
       end
-    end
-
-    def to_hash
-      { :power => power, :position => position.to_array }
     end
 
     protected
 
-    attr_writer :power, :bot
+    attr_writer :power
   end
 end
