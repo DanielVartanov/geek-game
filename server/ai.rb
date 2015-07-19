@@ -67,7 +67,7 @@ module GeekGame
       sign = angle_diff.sign
 
       distance = distance_to(target) - hold_off_distance
-      power = [[distance / 50, 1].min, 0.25].max
+      power = [[distance / 15, 1].min, 0.4].max
 
       if sign === 0
         motor! power, power
