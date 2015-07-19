@@ -6,6 +6,8 @@ module GeekGame
     define_scope :shells, proc { |game_object| game_object.is_a?(Shell) }
     define_scope :factories, proc { |game_object| game_object.is_a?(Factory) }
     define_scope :rechargers, proc { |game_object| game_object.is_a?(Recharger) }
+    define_scope :metal_derricks, proc { |game_object| game_object.is_a?(MetalDerrick) }
+    define_scope :connections, proc { |game_object| game_object.is_a?(Connection) }
 
     def update(seconds)
       each { |game_object| game_object.update(seconds) }
