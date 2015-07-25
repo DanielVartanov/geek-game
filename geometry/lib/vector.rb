@@ -54,7 +54,8 @@ class Vector < Struct.new(:x, :y)
 
   def angle_with(vector)
     cos_alpha = self.scalar_product(vector) / (self.modulus * vector.modulus)
-    cos_alpha = 1 if cos_alpha === 1
+    cos_alpha = 1 if cos_alpha > 1
+    cos_alpha = -1 if cos_alpha < -1
     Math.acos(cos_alpha)
   end
 
