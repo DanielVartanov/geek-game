@@ -10,17 +10,17 @@ module GeekGame
 
       # This is temporarily here
       @red = Player.new color: [0xff, 0, 0]
-      MetalDerrick.new position: Point(-400, -200)
-      @red.recharger = Recharger.new position: Point(-400, -200), player: @red
-      PewPewFactory.new position: Point(-300, -100), angle: 45.degrees, player: @red
-      EngineerFactory.new position: Point(-500, -200), angle: -135.degrees, player: @red
+      MetalDerrick.new position: Point(-1000, -400)
+      @red.recharger = Recharger.new position: Point(-1000, -400), player: @red
+      PewPewFactory.new position: Point(-1250, -400), angle: 90.degrees, player: @red
+      EngineerFactory.new position: Point(-1100, -600), angle: -135.degrees, player: @red
       build_initial_engineers_for @red
 
       @blue = Player.new color: [0, 0, 0xff]
-      MetalDerrick.new position: Point(400, 200)
-      @blue.recharger = Recharger.new position: Point(400, 200), player: @blue
-      PewPewFactory.new position: Point(300, 100), angle: -135.degrees, player: @blue
-      EngineerFactory.new position: Point(500, 200), angle: 45.degrees, player: @blue
+      MetalDerrick.new position: Point(1000, 400)
+      @blue.recharger = Recharger.new position: Point(1000, 400), player: @blue
+      PewPewFactory.new position: Point(950, 650), angle: 180.degrees, player: @blue
+      EngineerFactory.new position: Point(1250, 350), angle: 45.degrees, player: @blue
       build_initial_engineers_for @blue
 
       @ai = [AI.new(@red), AI.new(@blue)]
@@ -28,7 +28,7 @@ module GeekGame
 
     def build_initial_engineers_for(player)
       3.times do
-        random_position = player.recharger.position.advance_by(Vector.polar(1, rand(360).degrees) * rand(300))
+        random_position = player.recharger.position.advance_by(Vector.polar(1, rand(360).degrees) * (150 + rand(300)))
         Engineer.new position: random_position, angle: rand(360).degrees, player: player
       end
     end

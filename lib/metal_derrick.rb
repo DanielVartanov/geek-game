@@ -2,7 +2,7 @@ module GeekGame
   class MetalDerrick < Facility
     define_properties :metal_bars_per_chunk, :cooldown_period
 
-    facility_properties connection_distance: 20
+    facility_properties connection_distance: 23
     metal_derrick_properties metal_bars_per_chunk: 5, cooldown_period: 2.0
 
     attr_reader :metal_bars_available, :position

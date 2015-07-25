@@ -67,7 +67,7 @@ module GeekGame
       sign = angle_diff.sign
 
       distance = distance_to(target) - hold_off_distance
-      power = [[distance / 15, 1].min, 0.4].max
+      power = [[distance / 30, 1].min, 0.2].max
 
       if sign === 0
         motor! power, power
@@ -175,7 +175,7 @@ module GeekGame
       end
 
       my_engineers.each_slice(4) do |group|
-        first_bot_target = my_engineers.size < 6 ? my_engineer_factory : my_pew_pew_factory
+        first_bot_target = my_engineers.size < 4 ? my_engineer_factory : my_pew_pew_factory
         group.first.supply first_bot_target, from: closest_metal_derrick
         group.slice(1..3).each do |engineer|
           engineer.supply my_pew_pew_factory, from: closest_metal_derrick
