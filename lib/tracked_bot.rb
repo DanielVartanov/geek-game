@@ -98,7 +98,7 @@ module GeekGame
 
       angle_diff = track_axis_vector.signed_angle_with(advanced_track_axis_vector)
 
-      if angle_diff.zero?
+      if angle_diff.abs <= 1E-7
         movement_vector = normalized_movement_vector * max_velocity * left_track.power * seconds
         self.position = position.advance_by(movement_vector)
       else
