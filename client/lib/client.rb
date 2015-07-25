@@ -51,6 +51,14 @@ module GeekGame
             screen.scale *= 2.0
           when :keypad_minus
             screen.scale /= 2.0
+          when :left
+            screen.offset.shift_by! 100 / screen.scale, 0
+          when :right
+            screen.offset.shift_by! -100 / screen.scale, 0
+          when :down
+            screen.offset.shift_by! 0, -100 / screen.scale
+          when :up
+            screen.offset.shift_by! 0, 100 / screen.scale
           end
         end
       end

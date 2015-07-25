@@ -27,13 +27,17 @@ module GeekGame
     def draw
       screen.fill(:black)
       game_object_images.values.each(&:draw)
-      screen.draw_text_info(font, ["Number of objects: #{game_object_images.count}", "Scale: #{screen.scale}"])
+      screen.draw_text_info(font, ["Number of objects: #{game_object_images.count}",
+                                   "Scale: #{screen.scale}",
+                                   "Offset: #{screen.offset.x}, #{screen.offset.y}"])
+
+
       screen.flip
     end
 
     def extend_screen
       class << screen
-        attr_accessor :scale
+        attr_accessor :scale, :offset
 
         include Shapes
         include HUD
@@ -41,9 +45,18 @@ module GeekGame
         def default_color
           [0xaa, 0xaa, 0x00]
         end
+
+        def display_center
+          @display_center ||= Point(*size.map { |axis| axis / 2 })
+        end
+
+        def point_to_screen_coordinates(point)
+          display_center.shift_by(offset.x, offset.y).shift_by(point.x * scale, -point.y * scale)
+        end
       end
 
       screen.scale = 1
+      screen.offset = Point(0, 0)
     end
   end
 end

@@ -1,8 +1,17 @@
 module GeekGame
   module PointExtensions
     def to_screen(screen)
-      center = screen.size.map { |axis| axis / 2 }
-      [center[0] + x * screen.scale, center[1] - y * screen.scale]
+      screen.point_to_screen_coordinates(self)
+    end
+
+    def shift_by(x, y)
+      dup.shift_by!(x, y)
+    end
+
+    def shift_by!(x, y)
+      self.x += x
+      self.y += y
+      self
     end
   end
 end
