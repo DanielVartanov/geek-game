@@ -2,6 +2,8 @@ require "socket"
 
 module GeekGame
   class Client < Struct.new(:server_host, :server_port)
+    attr_reader :screen
+
     def initialize(host, port)
       super
       setup_event_queue
@@ -43,6 +45,13 @@ module GeekGame
         when Rubygame::Events::QuitRequested
           Rubygame.quit
           exit
+        when Rubygame::Events::KeyPressed
+          case event.key
+          when :keypad_plus
+            screen.scale *= 2.0
+          when :keypad_minus
+            screen.scale /= 2.0
+          end
         end
       end
     end
