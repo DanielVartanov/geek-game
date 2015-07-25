@@ -7,11 +7,11 @@ module Graphics
     end
 
     def draw_hull
-      surface.draw_circle_a(position.to_screen(surface), self.class.radius, player_color)
+      surface.circle(position, self.class.radius, player_color)
     end
 
     def draw_progress
-      surface.draw_circle_a(position.to_screen(surface), self.class.radius * progress, player_color)
+      surface.circle(position, self.class.radius * progress, player_color)
     end
 
     def draw_metal_bars

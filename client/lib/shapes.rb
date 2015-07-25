@@ -1,15 +1,14 @@
 module Shapes
   def draw_polygon_s(points, color=default_color)
-    _draw_polygon(points, color, true, true)
-    return self
+    _draw_polygon points.map { |point| point.to_screen(self) }, color, true, true
   end
 
   def circle(center, radius, color=default_color)
-    draw_circle_a(center.to_screen(self), radius, color)
+    draw_circle_a(center.to_screen(self), radius * scale, color)
   end
 
   def solid_circle(center, radius, color=default_color)
-    draw_circle_s(center.to_screen(self), radius, color)
+    draw_circle_s(center.to_screen(self), radius * scale, color)
   end
 
   def line(line, color=default_color)
@@ -17,12 +16,10 @@ module Shapes
   end
 
   def triangle(point1, point2, point3, color=default_color)
-    points = [point1, point2, point3].map { |point| point.to_screen(self) }
-    draw_polygon_s(points, color)
+    draw_polygon_s([point1, point2, point3], color)
   end
 
   def rectangle(corners, color=default_color)
-    corners.map! { |point| point.to_screen(self)  }
     draw_polygon_s(corners, color)
   end
 

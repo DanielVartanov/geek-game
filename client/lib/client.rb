@@ -24,14 +24,6 @@ module GeekGame
       loop do
         handle_local_events
         @clock.tick
-
-=begin
-        if @socket.data?
-          fresh_data = @socket.gets
-          @scene.update_according_to fresh_data
-        end
-=end
-
         @scene.update_according_to @network_client.current_world_state
         @scene.draw
       end

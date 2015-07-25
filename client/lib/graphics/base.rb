@@ -1,10 +1,10 @@
 module Graphics
   class Base < Struct.new(:game_object, :surface)
-    def self.create_from(game_object, additional_arguments)
+    def self.create_from(game_object, surface:)
       klass_name = game_object[:type].camelize
       klass = Graphics.const_get(klass_name)
-      
-      klass.new game_object, additional_arguments[:surface]
+
+      klass.new game_object, surface
     end
 
     def method_missing(method_name, *args)

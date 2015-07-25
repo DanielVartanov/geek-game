@@ -16,7 +16,7 @@ module GeekGame
 
       ids_to_create = game_objects.keys - game_object_images.keys
       ids_to_create.each do |id|
-        game_object_images[id] = Graphics::Base.create_from game_objects[id], :surface => screen
+        game_object_images[id] = Graphics::Base.create_from game_objects[id], surface: screen
       end
 
       game_objects.keys.each do |id|
@@ -27,12 +27,14 @@ module GeekGame
     def draw
       screen.fill(:black)
       game_object_images.values.each(&:draw)
-      screen.draw_text_info(font, "Game has begun")
+      screen.draw_text_info(font, ["Number of objects: #{game_object_images.count}", "Scale: #{screen.scale}"])
       screen.flip
     end
 
     def extend_screen
       class << screen
+        attr_accessor :scale
+
         include Shapes
         include HUD
 
@@ -40,6 +42,8 @@ module GeekGame
           [0xaa, 0xaa, 0x00]
         end
       end
+
+      screen.scale = 1
     end
   end
 end
