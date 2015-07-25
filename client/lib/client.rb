@@ -52,13 +52,22 @@ module GeekGame
           when :keypad_minus
             screen.scale /= 2.0
           when :left
-            screen.offset.shift_by! 100 / screen.scale, 0
-          when :right
             screen.offset.shift_by! -100 / screen.scale, 0
+          when :right
+            screen.offset.shift_by! 100 / screen.scale, 0
           when :down
-            screen.offset.shift_by! 0, -100 / screen.scale
+            screen.offset.shift_by! 0, -50 / screen.scale
           when :up
-            screen.offset.shift_by! 0, 100 / screen.scale
+            screen.offset.shift_by! 0, 50 / screen.scale
+          when :f1
+            screen.offset = Point(0, 0)
+            screen.scale = 0.5
+          when :f2
+            screen.offset = Point(-1000, -400)
+            screen.scale = 1
+          when :f3
+            screen.offset = Point(1000, 400)
+            screen.scale = 1
           end
         end
       end

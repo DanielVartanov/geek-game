@@ -30,8 +30,6 @@ module GeekGame
       screen.draw_text_info(font, ["Number of objects: #{game_object_images.count}",
                                    "Scale: #{screen.scale}",
                                    "Offset: #{screen.offset.x}, #{screen.offset.y}"])
-
-
       screen.flip
     end
 
@@ -51,12 +49,12 @@ module GeekGame
         end
 
         def point_to_screen_coordinates(point)
-          display_center.shift_by(offset.x, offset.y).shift_by(point.x * scale, -point.y * scale)
+          display_center.shift_by(-offset.x, offset.y).shift_by(point.x * scale, -point.y * scale)
         end
       end
 
       screen.scale = 1
-      screen.offset = Point(0, 0)
+      screen.offset = Point(1000, 400)
     end
   end
 end
