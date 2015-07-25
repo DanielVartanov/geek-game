@@ -80,7 +80,7 @@ module GeekGame
     end
 
     def setup_screen
-      @screen = Rubygame::Screen.new [1280, 800], 0, [Rubygame::HWSURFACE, Rubygame::DOUBLEBUF]
+      @screen = Rubygame::Screen.new [1280, 700], 0, [Rubygame::HWSURFACE, Rubygame::DOUBLEBUF]
       @screen.title = "GeekGame"
     end
 
