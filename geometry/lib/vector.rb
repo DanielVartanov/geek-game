@@ -52,6 +52,10 @@ class Vector < Struct.new(:x, :y)
     Vector.new(x * scalar, y * scalar)
   end
 
+  def reverse
+    self * -1
+  end
+
   def angle_with(vector)
     cos_alpha = self.scalar_product(vector) / (self.modulus * vector.modulus)
     cos_alpha = 1 if cos_alpha > 1
