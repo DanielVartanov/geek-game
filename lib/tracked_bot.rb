@@ -78,8 +78,11 @@ module GeekGame
     attr_writer :battery
     attr_writer :health_points
     attr_writer :player
-    attr_writer :angle
     attr_writer :position
+
+    def angle=(value)
+      @angle = value % (2 * Math::PI)
+    end
 
     def advancing_cost(seconds)
       movement_cost * seconds * (left_track.power + right_track.power)
