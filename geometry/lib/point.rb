@@ -7,9 +7,13 @@ class Point < Struct.new(:x, :y)
     Math.hypot point.x - self.x, point.y - self.y
   end
 
+  def vector_to(point)
+    Vector.by_end_points(self, point)
+  end
+
   def rotate_around(center, angle)
     diff = Point.new(self.x - center.x, self.y - center.y)
-    Point.new(center.x + diff.x * Math.cos(angle) - diff.y * Math.sin(angle), 
+    Point.new(center.x + diff.x * Math.cos(angle) - diff.y * Math.sin(angle),
               center.y + diff.x * Math.sin(angle) + diff.y * Math.cos(angle))
   end
 
