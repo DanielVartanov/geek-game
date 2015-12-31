@@ -22,14 +22,22 @@ module GeekGame
       PewPewFactory.new position: Point(950, 650), angle: 180.degrees, player: @blue
       EngineerFactory.new position: Point(1250, 350), angle: 45.degrees, player: @blue
       build_initial_engineers_for @blue
+      build_initial_pew_pews_for @blue
 
-      @ai = [AI.new(@red), AI.new(@blue)]
+      @ai = [AI::Lemmings.new(@red), AI::AttackInFormation.new(@blue)]
     end
 
     def build_initial_engineers_for(player)
       3.times do
         random_position = player.recharger.position.advance_by(Vector.polar(1, rand(360).degrees) * (150 + rand(300)))
         Engineer.new position: random_position, angle: rand(360).degrees, player: player
+      end
+    end
+
+    def build_initial_pew_pews_for(player)
+      5.times do
+        random_position = player.recharger.position.advance_by(Vector.polar(1, rand(360).degrees) * (150 + rand(300)))
+        PewPew.new position: random_position, angle: rand(360).degrees, player: player
       end
     end
 
