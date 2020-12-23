@@ -14,7 +14,7 @@ GEM
     minitest (5.9.0)
     nice-ffi (0.4)
       ffi (>= 0.5.0)
-    rake (11.2.2)
+    rake (13.0.3)
     rspec (3.5.0)
       rspec-core (~> 3.5.0)
       rspec-expectations (~> 3.5.0)
@@ -47,4 +47,4 @@ DEPENDENCIES
   rubygame
 
 BUNDLED WITH
-   1.12.5
+   2.1.2
